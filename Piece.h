@@ -13,7 +13,7 @@ class Piece {
         bool color;
         char letter;
     public:
-        virtual move(string coords);
+        virtual void move(string coords);
         virtual bool moveable(string coords);
         virtual std::vector<std::string> squaresWatching();
         virtual bool underThreat();

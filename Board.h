@@ -16,7 +16,7 @@ class Board {
         bool checkmate;
         
     public:
-        std::vector<std::vector<>> theBoard
+        std::vector<std::vector<>> theBoard;
         void init();
         void setupPiece(char piece, std::string coord);
         void movePiece(std::string startCoord, std::string endCoord);
