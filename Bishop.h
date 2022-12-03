@@ -8,10 +8,10 @@
 
 class Bishop: public Piece {
     public:
-        void move(string coords);
-        bool moveable(string coords);
+        void move(std::string coords);
+        bool moveable(std::string coords);
         std::vector<std::string> squaresWatching();
         bool underThreat();
-}
+};
 
 #endif

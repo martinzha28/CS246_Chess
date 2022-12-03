@@ -1,72 +1,131 @@
 #include "Board.h"
+#include "Piece.h"
+#include <vector>
 
-void Board::init() {
-    for (int i = 0; i < 8; i++) {
-        vector<Piece *> vect;
-        for (int j = 0; j < 8; j++) {
-            if (i == 0) {
-                if (j == 0) {
-                    this.setupPiece('R', "a1");
-                } else if (j == 1) {
-                    this.setupPiece('N', "b1");
-                } else if (j == 2) {
-                    this.setupPiece('B', "c1");
-                } else if (j == 3) {
-                    this.setupPiece('Q', "d1");
-                } else if (j == 4) {
-                    this.setupPiece('K', "e1");
-                } else if (j == 5) {
-                    this.setupPiece('B', "f1");
-                } else if (j == 6) {
-                    this.setupPiece('N', "g1");
-                } else if (j == 7) {
-                    this.setupPiece('R', "h1");
-                } 
-            } else if (i == 7) {
-                if (j == 0) {
-                    this.setupPiece('r', "a8");
-                } else if (j == 1) {
-                    this.setupPiece('n', "b8");
-                } else if (j == 2) {
-                    this.setupPiece('b', "c8");
-                } else if (j == 3) {
-                    this.setupPiece('q', "d8");
-                } else if (j == 4) {
-                    this.setupPiece('k', "e8");
-                } else if (j == 5) {
-                    this.setupPiece('b', "f8");
-                } else if (j == 6) {
-                    this.setupPiece('n', "g8");
-                } else if (j == 7) {
-                    this.setupPiece('r', "h8");
-                } 
+void Board::init()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        std::vector<Piece*> vect;
+        for (int j = 0; j < 8; j++)
+        {
+            if (i == 0)
+            {
+                if (j == 0)
+                {
+                    Piece tempPiece = setupPiece('R', a, 1);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 1)
+                {
+                    Piece tempPiece = setupPiece('N', b, 1);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 2)
+                {
+                    Piece tempPiece = setupPiece('B', c, 1);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 3)
+                {
+                    Piece tempPiece = setupPiece('Q', d, 1);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 4)
+                {
+                    Piece tempPiece = setupPiece('K', e, 1);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 5)
+                {
+                    Piece tempPiece = setupPiece('B', f, 1);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 6)
+                {
+                    Piece tempPiece = setupPiece('N', g, 1);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 7)
+                {
+                    Piece tempPiece = setupPiece('R', h, 1);
+                    vect.emplace_back(&tempPiece);
+                }
+            }
+            else if (i == 7)
+            {
+                if (j == 0)
+                {
+                    Piece tempPiece = setupPiece('r', a, 8);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 1)
+                {
+                    Piece tempPiece = setupPiece('n', b, 8);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 2)
+                {
+                    Piece tempPiece = setupPiece('b', c, 8);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 3)
+                {
+                    Piece tempPiece = setupPiece('q', d, 8);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 4)
+                {
+                    Piece tempPiece = setupPiece('k', e, 8);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 5)
+                {
+                    Piece tempPiece = setupPiece('b', f, 8);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 6)
+                {
+                    Piece tempPiece = setupPiece('n', g, 8);
+                    vect.emplace_back(&tempPiece);
+                }
+                else if (j == 7)
+                {
+                    Piece tempPiece = setupPiece('r', h, 8);
+                    vect.emplace_back(&tempPiece);
+                }
             }
         }
         piecePosition.emplace_back(vect);
     }
 }
 
-Board::~Board() {
+Board::~Board()
+{
 }
 
-void Board::setupPiece(char piece, std::string coord) {
-
+Piece Board::setupPiece(char piece, int col, int row)
+{
 }
 
-void Board::movePiece(std::string startCoord, std::string endCoord) {
-
+void Board::movePiece(std::string startCoord, std::string endCoord)
+{
 }
 
-bool Board::isStalemate() {
+bool Board::isStalemate()
+{
     return 1;
 }
 
-bool Board::isCheckmate() {
+bool Board::isCheckmate()
+{
     return 1;
 }
 
-void Board::setStalemate() {
+void Board::setStalemate()
+{
 }
 
-void Board::setCheckmate() {
+void Board::setCheckmate()
+{
 }
