@@ -17,6 +17,6 @@ class Piece {
         virtual std::vector<std::string> squaresWatching();
         virtual bool underThreat();
         ~Piece();
-}
+};
 
 #endif

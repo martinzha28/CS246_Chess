@@ -12,13 +12,13 @@ int abs(int a, int b) {
 }
 
 
-Bishop::Bishop(row, col, color, letter) : row{row}, col{col}, color{color}, letter{letter} {}
+Bishop::Bishop(int row, int col, bool color, char letter) : row{row}, col{col}, color{color}, letter{letter} {}
 
-void Piece::Bishop::move(int inCol, int inRow) {
+void Bishop::move(int inCol, int inRow) {
 
 }
 
-bool Piece::Bishop::moveable(int inCol, int inRow) {
+bool Bishop::moveable(int inCol, int inRow) {
     bool moveable = false;
     // Checks if input cell is diagonal to current cell
     if (col - inCol == abs(row - inRow)) { // col > inCol, bishop moves left
@@ -34,10 +34,10 @@ bool Piece::Bishop::moveable(int inCol, int inRow) {
     return moveable;
 }
 
-std::vector<std::string> Piece::Bishop::squaresWatching() {
+std::vector<std::string> Bishop::squaresWatching() {
 
 }
 
-bool Piece::Bishop::underThreat() {
+bool Bishop::underThreat() {
 
 }

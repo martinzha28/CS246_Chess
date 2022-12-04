@@ -12,7 +12,7 @@ class Rook: public Piece {
     bool color;
     char letter;
 public:
-    Rook(row, col, color, letter);
+    Rook(int row, int col, bool color, char letter);
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow);
     std::vector<std::string> squaresWatching();
