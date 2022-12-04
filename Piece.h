@@ -11,12 +11,12 @@ class Piece {
         int row;
         int col;
         bool color;
-        char letter;
     public:
-        virtual void move(string coords);
-        virtual bool moveable(string coords);
+        virtual void move(int col, int row);
+        virtual bool moveable(int col, int row);
         virtual std::vector<std::string> squaresWatching();
         virtual bool underThreat();
+        ~Piece();
 }
 
 #endif

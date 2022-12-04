@@ -11,8 +11,8 @@ class King: public Piece {
         bool canCastle;
         bool inCheck;
     public:
-        void move(string coords);
-        bool moveable(string coords);
+        void move(int col, int row);
+        bool moveable(int col, int row);
         std::vector<std::string> squaresWatching();
         bool underThreat();
 }

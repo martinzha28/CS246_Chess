@@ -1,18 +1,20 @@
-#ifndef __BISHOP_H__
-#define __BISHOP_H__
+#ifndef __PAWN_H__
+#define __PAWN_H__
 
 #include <vector>
 #include <iostream>
 #include <string>
 #include "Piece.h"
 
-class Bishop: public Piece {
+class Pawn: public Piece {
     int row;
     int col;
     bool color;
     char letter;
+    bool twoStep;
+    bool enPassent;
 public:
-    Bishop(row, col, color, letter);
+    Pawn(row, col, color, letter);
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow);
     std::vector<std::string> squaresWatching();
