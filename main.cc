@@ -1,4 +1,4 @@
-printBoard(theBoard)
+#include "Board.h"
 
 int main() {
 

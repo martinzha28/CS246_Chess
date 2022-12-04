@@ -29,9 +29,10 @@ public:
         h
     };
     void init();
-    Piece setupPiece(char piece, int col, int row);
+    Piece* setupPiece(char piece, int col, int row);
+    Piece* setupEmpty(int col, int row);
     void movePiece(std::string startCoord, std::string endCoord);
-    Piece getPiece(int col, int row);
+    Piece* getPiece(int col, int row);
     bool isCheck(Player chessPlayer);
     bool isStalemate(Player chessPlayer);
     bool isCheckmate(Player chessPlayer);
