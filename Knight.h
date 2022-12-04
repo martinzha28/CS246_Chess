@@ -12,7 +12,7 @@ class Knight: public Piece {
     bool color;
     char letter;
 public:
-    Knight(row, col, color, letter);
+    Knight(int row, int col, bool color, char letter);
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow);
     std::vector<std::string> squaresWatching();

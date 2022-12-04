@@ -1,17 +1,22 @@
-coordToArray()
+#include "King.h"
+#include <string>
 
-void Piece::King::move(string coords) {
+/* coordToArray() what is this??? */
+
+King::King(int row, int col, bool color, char letter) : row{row}, col{col}, color{color}, letter{letter} {}
+
+void King::move(int inCol, int inRow) {
 
 }
 
-bool Piece::King::moveable(string coords) {
+bool King::moveable(int inCol, int inRow) {
     
 }
 
-std::vector<std::string> Piece::King::squaresWatching() {
+std::vector<std::string> King::squaresWatching() {
 
 }
 
-bool Piece::King::underThreat() {
+bool King::underThreat() {
 
 }
