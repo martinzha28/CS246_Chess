@@ -41,7 +41,6 @@ void Board::update(int inCol, int inRow, Piece *updatePiece) {
     }
 }
 
-
 void Board::init() // Initial Setup for Board
 {
     for (int i = 7; i >= 0; --i)
@@ -344,7 +343,7 @@ void Board::move(int startRow, int startCol, int endRow, int endCol)
 } 
 
 void Board::tempPrint() {
-    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    /* for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
     {
         for (auto it2 = it->begin(); it2 != it->end(); ++it2)
         {
@@ -355,7 +354,8 @@ void Board::tempPrint() {
             std::cout << "--";
         }
         std::cout << std::endl;
-    }
+    } */
+    notifyObservers();
 }
 
 Piece *Board::getPiece(int inCol, int inRow)
