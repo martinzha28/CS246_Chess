@@ -348,9 +348,6 @@ void Board::tempPrint() {
     {
         for (auto it2 = it->begin(); it2 != it->end(); ++it2)
         {
-            // something wrong with getLetter()
-            // only printing in 6th col
-            // std::string s(1, (*it2)->getLetter()); // convert char to string
             std::cout << (*it2)->getLetter() << "|";
         }
         std::cout << std::endl;
