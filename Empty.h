@@ -11,7 +11,7 @@ class Empty: public Piece {
     int col;
     char letter = 0;
 public:
-    Empty(row, col);
+    Empty(int row, int col);
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow);
     std::vector<std::string> squaresWatching();
