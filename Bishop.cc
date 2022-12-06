@@ -9,6 +9,10 @@ Bishop::Bishop(int row, int col, bool color, char letter) : row{row}, col{col}, 
 
 Bishop::~Bishop() {}
 
+char Bishop::getLetter() {
+    return this->letter;
+}
+
 bool Bishop::moveable(int inCol, int inRow, Board theBoard) {
 
     // Check bounds

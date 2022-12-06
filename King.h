@@ -19,6 +19,7 @@ protected:
 public:
     King(int row, int col, bool color, char letter);
     ~King();
+    char getLetter();
     void move(int col, int row);
     bool moveable(int col, int row, Board theBoard);
     bool underThreat(std::vector< std::vector<Piece *>>, Board theBoard);

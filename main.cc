@@ -20,10 +20,10 @@ int main() {
 
     Board theBoard;
 
-    theBoard.setupPiece('q', 3, 4);
-
-    theBoard.tempInit();
+    theBoard.init();
     theBoard.tempPrint();
+
+    
 
 
 }

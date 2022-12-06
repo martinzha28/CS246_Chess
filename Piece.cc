@@ -24,10 +24,6 @@ bool Piece::getColor(){
     return this->color;
 }
 
-char Piece::getLetter() {
-    return this->letter;
-}
-
 bool Piece::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) {
     for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
     {

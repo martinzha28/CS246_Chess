@@ -8,6 +8,7 @@
 #include "Piece.h"
 
 class Rook: public Piece {
+protected:
     int row;
     int col;
     bool color;
@@ -15,6 +16,7 @@ class Rook: public Piece {
 public:
     Rook(int row, int col, bool color, char letter);
     ~Rook();
+    char getLetter();
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow, Board theBoard);
 };

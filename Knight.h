@@ -15,6 +15,7 @@ class Knight: public Piece {
 public:
     Knight(int row, int col, bool color, char letter);
     ~Knight();
+    char getLetter();
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow, Board theBoard);
 };

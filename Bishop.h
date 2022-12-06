@@ -16,6 +16,7 @@ protected:
 public:
     Bishop(int row, int col, bool color, char letter);
     ~Bishop();
+    char getLetter();
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow, Board theBoard);
 };

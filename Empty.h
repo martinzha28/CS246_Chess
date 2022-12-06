@@ -13,6 +13,9 @@ class Empty: public Piece {
 public:
     Empty(int row, int col);
     ~Empty();
+    char getLetter();
+    void move(int inCol, int inRow);
+    bool moveable(int inCol, int inRow, Board theBoard);
 };
 
 #endif

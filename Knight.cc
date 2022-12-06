@@ -9,6 +9,10 @@ Knight::Knight(int row, int col, bool color, char letter) : row{row}, col{col}, 
 
 Knight::~Knight() {}
 
+char Knight::getLetter() {
+    return this->letter;
+}
+
 void Knight::move(int inCol, int inRow) {
 
 }

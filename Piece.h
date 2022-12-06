@@ -21,7 +21,7 @@ class Piece {
         // virtual std::vector<std::string> squaresWatching();
         bool underThreat(std::vector< std::vector<Piece *>>, Board theBoard);
         bool getColor();
-        char getLetter();
+        virtual char getLetter() = 0;
         virtual ~Piece();
         virtual void move(int col, int row) = 0;
         virtual bool moveable(int col, int row, Board theBoard) = 0;

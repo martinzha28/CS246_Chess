@@ -9,6 +9,10 @@ Queen::Queen(int row, int col, bool color, char letter) : row{row}, col{col}, co
 
 Queen::~Queen() {}
 
+char Queen::getLetter() {
+    return this->letter;
+}
+
 void Queen::move(int inCol, int inRow) {
 
 }

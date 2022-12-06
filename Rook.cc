@@ -10,6 +10,10 @@ Rook::Rook(int row, int col, bool color, char letter) : row{row}, col{col}, colo
 
 Rook::~Rook() {}
 
+char Rook::getLetter() {
+    return this->letter;
+}
+
 void Rook::move(int inCol, int inRow) {
 
 }

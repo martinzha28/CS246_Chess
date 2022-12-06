@@ -30,7 +30,7 @@ public:
         g,
         h
     };
-    void tempInit();
+    void blankInit();
     std::vector< std::vector<Piece *>> piecePosition;
     void init();
     ~Board();

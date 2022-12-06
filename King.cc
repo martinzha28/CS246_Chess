@@ -18,6 +18,10 @@ King::King(int row, int col, bool color, char letter) : row{row}, col{col}, colo
 
 King::~King() {}
 
+char King::getLetter() {
+    return this->letter;
+}
+
 void King::move(int inCol, int inRow) {
 
 }

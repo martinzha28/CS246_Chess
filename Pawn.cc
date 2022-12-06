@@ -10,6 +10,10 @@ Pawn::Pawn(int row, int col, bool color, char letter) : row{row}, col{col}, colo
 
 Pawn::~Pawn() {}
 
+char Pawn::getLetter() {
+    return this->letter;
+}
+
 void Pawn::move(int inCol, int inRow) {
 
 }
