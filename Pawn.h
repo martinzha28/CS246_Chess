@@ -16,10 +16,9 @@ class Pawn: public Piece {
     bool enPassent;
 public:
     Pawn(int row, int col, bool color, char letter);
+    ~Pawn();
     void move(int inCol, int inRow);
-    bool moveable(int inCol, int inRow);
-    std::vector<std::string> squaresWatching();
-    bool underThreat();
+    bool moveable(int inCol, int inRow, Board theBoard);
 };
 
 #endif

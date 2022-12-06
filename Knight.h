@@ -14,10 +14,9 @@ class Knight: public Piece {
     char letter;
 public:
     Knight(int row, int col, bool color, char letter);
+    ~Knight();
     void move(int inCol, int inRow);
-    bool moveable(int inCol, int inRow);
-    std::vector<std::string> squaresWatching();
-    bool underThreat();
+    bool moveable(int inCol, int inRow, Board theBoard);
 };
 
 #endif

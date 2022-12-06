@@ -5,23 +5,16 @@
 #include "Piece.h"
 #include "Pawn.h"
 
-// Absolute Value
-int abs(int a, int b) {
-    if (a - b > 0) {
-        return a - b;
-    } else {
-        return b - a;
-    }
-}
-
 
 Pawn::Pawn(int row, int col, bool color, char letter) : row{row}, col{col}, color{color}, letter{letter} {}
+
+Pawn::~Pawn() {}
 
 void Pawn::move(int inCol, int inRow) {
 
 }
 
-bool Pawn::moveable(int inCol, int inRow) {
+bool Pawn::moveable(int inCol, int inRow, Board theBoard) {
      // Check bounds
     if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
         return false;
@@ -33,11 +26,11 @@ bool Pawn::moveable(int inCol, int inRow) {
     }
 
     // Checks if piece is occupied by same color
-    if (theBoard.getPiece(inCol, inRow).getColor() == this.getColor()) {
+    if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
         return false;
     }
 
-    int direction = (this->color == 1) ? 1 : -1; // direction of pawn
+    int direction = (this->getColor() == 1) ? 1 : -1; // direction of pawn
     
     if (col == inCol && row + direction == inRow) { // condition for moving forward 1
 
@@ -51,12 +44,4 @@ bool Pawn::moveable(int inCol, int inRow) {
     // condition for moving piece creates check
     
     return true;
-}
-
-std::vector<std::string> Pawn::squaresWatching() {
-
-}
-
-bool Pawn::underThreat() {
-
 }

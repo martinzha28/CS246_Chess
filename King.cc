@@ -16,11 +16,13 @@ int abs(int a, int b) {
 
 King::King(int row, int col, bool color, char letter) : row{row}, col{col}, color{color}, letter{letter} {}
 
+King::~King() {}
+
 void King::move(int inCol, int inRow) {
 
 }
 
-bool King::moveable(int inCol, int inRow) {
+bool King::moveable(int inCol, int inRow, Board theBoard) {
     // Check bounds
     if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
         return false;
@@ -32,28 +34,21 @@ bool King::moveable(int inCol, int inRow) {
     }
 
     // Checks if piece is occupied by same color
-    if (theBoard.getPiece(inCol, inRow).getColor() == this.getColor()) {
+    if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
         return false;
     }
 
     // Checks if moved in direct one move
 
-    if (abs(inCol - col) > 1 || abs(inRow - row) > 1) {
+    if (inCol - col > 1 || inRow - row > 1 || col - inCol > 1 || row - inRow > 1) {
         return false;
-    } else if () { // castling conditions
+    } else if (true) { // castling conditions NOT FINISHED
         // check casling conditions
+        return false;
     }
 
     // check conditions for moving creates a check
 
     return true;
-
-}
-
-std::vector<std::string> King::squaresWatching() {
-
-}
-
-bool King::underThreat() {
 
 }

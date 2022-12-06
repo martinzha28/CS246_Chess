@@ -6,19 +6,25 @@
 #include <string>
 #include "Board.h"
 
+class Board;
+
 class Piece {
     protected:
+        
+    public:
         int row;
         int col;
         bool color;
-    public:
+        char letter;
         int getRow();
         int getCol();
-        virtual void move(int col, int row);
-        virtual bool moveable(int col, int row);
-        virtual std::vector<std::string> squaresWatching();
-        virtual bool underThreat();
-        ~Piece();
+        // virtual std::vector<std::string> squaresWatching();
+        bool underThreat(std::vector< std::vector<Piece *>>, Board theBoard);
+        bool getColor();
+        char getLetter();
+        virtual ~Piece();
+        virtual void move(int col, int row) = 0;
+        virtual bool moveable(int col, int row, Board theBoard) = 0;
 };
 
 #endif

@@ -14,10 +14,9 @@ class Rook: public Piece {
     char letter;
 public:
     Rook(int row, int col, bool color, char letter);
+    ~Rook();
     void move(int inCol, int inRow);
-    bool moveable(int inCol, int inRow);
-    std::vector<std::string> squaresWatching();
-    bool underThreat();
+    bool moveable(int inCol, int inRow, Board theBoard);
 };
 
 #endif

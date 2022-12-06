@@ -9,13 +9,10 @@
 class Empty: public Piece {
     int row;
     int col;
-    char letter = 0;
+    char letter = ' ';
 public:
     Empty(int row, int col);
-    void move(int inCol, int inRow);
-    bool moveable(int inCol, int inRow);
-    std::vector<std::string> squaresWatching();
-    bool underThreat();
+    ~Empty();
 };
 
 #endif

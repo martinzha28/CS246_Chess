@@ -5,18 +5,11 @@
 #include "Piece.h"
 #include "Bishop.h"
 
-// Absolute Value
-int abs(int a, int b) {
-    if (a - b > 0) {
-        return a - b;
-    } else {
-        return b - a;
-    }
-}
-
 Bishop::Bishop(int row, int col, bool color, char letter) : row{row}, col{col}, color{color}, letter{letter} {}
 
-bool Bishop::moveable(int inCol, int inRow) {
+Bishop::~Bishop() {}
+
+bool Bishop::moveable(int inCol, int inRow, Board theBoard) {
 
     // Check bounds
     if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
@@ -34,17 +27,19 @@ bool Bishop::moveable(int inCol, int inRow) {
     }
 
     // Checks if piece is occupied by same color
-    if (theBoard.getPiece(inCol, inRow).getColor() == this.getColor()) {
+    if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
         return false;
     }
 
     // Checks if pathway is blocked
     int colDirection = (inCol > col) ? 1 : -1;
     int rowDirection = (inRow > row) ? 1 : -1;
-    for (int i = inCol + colDirection, int j = inRow + rowDirection; i != inCol; i += colDirection, j += rowDirection) {
-        if (theBoard.getPiece(i, j).getLetter() != 0) {
+    int j = inRow + rowDirection;
+    for (int i = inCol + colDirection; i != inCol; i += colDirection) {
+        if (theBoard.getPiece(i, j)->getLetter() != ' ') {
             return false;
         }
+        j += rowDirection;
     }
 
     // Check to see if move is able to block check
@@ -58,11 +53,6 @@ bool Bishop::moveable(int inCol, int inRow) {
     return true;
 }
 
-bool Bishop::underThreat() {
-    for (PiecePosition) {
-        if (Piece.moveable(this->col, this->row)) {
-            return true;
-        }
-    }
-    return false;
+void Bishop::move(int inCol, int inRow) {
+
 }

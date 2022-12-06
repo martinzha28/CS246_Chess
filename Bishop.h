@@ -8,14 +8,16 @@
 #include "Piece.h"
 
 class Bishop: public Piece {
+protected:
     int row;
     int col;
     bool color;
     char letter;
 public:
     Bishop(int row, int col, bool color, char letter);
-    bool moveable(int inCol, int inRow);
-    bool underThreat();
+    ~Bishop();
+    void move(int inCol, int inRow);
+    bool moveable(int inCol, int inRow, Board theBoard);
 };
 
 #endif
