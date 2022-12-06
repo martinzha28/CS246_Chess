@@ -10,14 +10,15 @@ class Piece {
     protected:
         int row;
         int col;
-        bool color; // false for black, true for white
-        char letter;
+        bool color;
     public:
-        virtual void move(int inCol, int inRow); // think this is useless
-        virtual bool moveable(int inCol, int inRow);
-        virtual std::vector<std::string> squaresWatching(); // so is this
+        int getRow();
+        int getCol();
+        virtual void move(int col, int row);
+        virtual bool moveable(int col, int row);
+        virtual std::vector<std::string> squaresWatching();
         virtual bool underThreat();
         ~Piece();
-}
+};
 
 #endif
