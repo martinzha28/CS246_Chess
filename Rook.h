@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include "Board.h"
 #include "Piece.h"
 
 class Rook: public Piece {

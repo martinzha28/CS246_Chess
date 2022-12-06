@@ -4,13 +4,14 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include "Board.h"
 #include "Piece.h"
 
 class King : public Piece
 {
 protected:
-    bool canCastle;
-    bool inCheck;
+    bool canCastle = true;
+    bool inCheck = false;
     int row;
     int col;
     bool color;

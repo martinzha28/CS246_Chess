@@ -1,5 +1,8 @@
 #include <vector>
 #include <iostream>
+#include <string>
+#include "Board.h"
+#include "Piece.h"
 #include "Rook.h"
 
 // Absolute Value
@@ -19,19 +22,51 @@ void Rook::move(int inCol, int inRow) {
 }
 
 bool Rook::moveable(int inCol, int inRow) {
-    bool moveable = false;
-    // Checks if input cell is diagonal to current cell
-    if (col - inCol == abs(row - inRow)) { // col > inCol, bishop moves left
-        for (int i = col; i <= inCol; i--) {
-            if ()
-        }
-    } else if (col - inCol == abs(row - inRow)) { // inCol > col, bishop moves right
-        for (int i = col; i <= inCol; i++) { 
+    // Check bounds
+    if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
+        return false;
+    }
 
-        }
-    } 
+    // Check if moved to own square
+    if (inCol == col && inRow == row) {
+        return false;
+    }
 
-    return moveable;
+    // Checks if piece is occupied by same color
+    if (theBoard.getPiece(inCol, inRow).getColor() == this.getColor()) {
+        return false;
+    }
+
+    // Checks if input cell is in a straight line to the current cell
+    if (col != inCol && row != inRow) {
+        return false;
+    }
+
+    // Checks if pathway is blocked
+    if (col == inCol) {
+        int rowDirection = (inRow > row) ? 1 : -1;
+        for (int i = inRow + rowDirection; i != inRow; i += rowDirection) {
+            if (theBoard.getPiece(col, i).getLetter() != '0') {
+                return false;
+            }
+        }
+    } else if (row == inRow) {
+        int colDirection = (inCol > col) ? 1 : -1;
+        for (int i = inCol + colDirection; i != inCol; i += colDirection) {
+            if (theBoard.getPiece(i, row).getLetter() != '0') {
+                return false;
+            }
+        }
+    }
+    // Check to see if move blocks check
+
+    
+
+    // Checks to see if moving the Piece produces check
+    
+
+
+    return true;
 }
 
 std::vector<std::string> Rook::squaresWatching() {

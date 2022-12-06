@@ -1,5 +1,8 @@
 #include <vector>
 #include <iostream>
+#include <string>
+#include "Board.h"
+#include "Piece.h"
 #include "Pawn.h"
 
 // Absolute Value
@@ -19,19 +22,35 @@ void Pawn::move(int inCol, int inRow) {
 }
 
 bool Pawn::moveable(int inCol, int inRow) {
-    bool moveable = false;
-    // Checks if input cell is diagonal to current cell
-    if (col - inCol == abs(row - inRow)) { // col > inCol, bishop moves left
-        for (int i = col; i <= inCol; i--) {
-            if ()
-        }
-    } else if (col - inCol == abs(row - inRow)) { // inCol > col, bishop moves right
-        for (int i = col; i <= inCol; i++) { 
+     // Check bounds
+    if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
+        return false;
+    }
 
-        }
-    } 
+    // Check if moved to own square
+    if (inCol == col && inRow == row) {
+        return false;
+    }
 
-    return moveable;
+    // Checks if piece is occupied by same color
+    if (theBoard.getPiece(inCol, inRow).getColor() == this.getColor()) {
+        return false;
+    }
+
+    int direction = (this->color == 1) ? 1 : -1; // direction of pawn
+    
+    if (col == inCol && row + direction == inRow) { // condition for moving forward 1
+
+    } else if (col == inCol && row + direction + direction == inRow) { // condition for moving forward 2
+
+    } else if (row + direction == inRow && (col + 1 == inCol || col - 1 == inCol)) { // condition for taking diagonally 
+
+    }
+
+
+    // condition for moving piece creates check
+    
+    return true;
 }
 
 std::vector<std::string> Pawn::squaresWatching() {
