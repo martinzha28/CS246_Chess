@@ -59,10 +59,14 @@ bool Bishop::moveable(int inCol, int inRow) {
 }
 
 bool Bishop::underThreat() {
-    for (PiecePosition) {
-        if (Piece.moveable(this->col, this->row)) {
-            return true;
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->moveable(this->col, this->row))
+            {
+                return *it2;
+            }
         }
     }
-    return false;
 }
