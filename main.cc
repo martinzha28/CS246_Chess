@@ -19,6 +19,7 @@ int main() {
 
     Board theBoard;
 
-    
+    theBoard.init();
+    theBoard.tempPrint();
 
 }

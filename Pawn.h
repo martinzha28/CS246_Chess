@@ -18,7 +18,6 @@ public:
     Pawn(int row, int col, bool color, char letter);
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow);
-    std::vector<std::string> squaresWatching();
     bool underThreat();
 };
 

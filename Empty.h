@@ -14,7 +14,6 @@ public:
     Empty(row, col);
     void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow);
-    std::vector<std::string> squaresWatching();
     bool underThreat();
 };
 

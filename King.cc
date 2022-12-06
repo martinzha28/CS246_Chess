@@ -50,10 +50,15 @@ bool King::moveable(int inCol, int inRow) {
 
 }
 
-std::vector<std::string> King::squaresWatching() {
-
-}
-
 bool King::underThreat() {
-
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->moveable(this->col, this->row))
+            {
+                return *it2;
+            }
+        }
+    }
 }

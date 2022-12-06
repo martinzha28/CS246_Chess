@@ -53,10 +53,15 @@ bool Pawn::moveable(int inCol, int inRow) {
     return true;
 }
 
-std::vector<std::string> Pawn::squaresWatching() {
-
-}
-
 bool Pawn::underThreat() {
-
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->moveable(this->col, this->row))
+            {
+                return *it2;
+            }
+        }
+    }
 }

@@ -14,6 +14,7 @@ class Bishop: public Piece {
     char letter;
 public:
     Bishop(int row, int col, bool color, char letter);
+    void move(int inCol, int inRow);
     bool moveable(int inCol, int inRow);
     bool underThreat();
 };

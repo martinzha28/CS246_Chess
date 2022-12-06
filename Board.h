@@ -4,11 +4,13 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include "Piece.h"
+
+class Piece;
 
 class Board
 {
 protected:
-    std::vector<std::vector<Piece *>> piecePosition;
     bool whoseTurn;
     int fiftyMoveDraw;
     /* Player * player1;
@@ -28,15 +30,17 @@ public:
         g,
         h
     };
+    std::vector<Piece *> piecePosition;
     void init();
     Piece* setupPiece(char piece, int col, int row);
     Piece* setupEmpty(int col, int row);
     void movePiece(std::string startCoord, std::string endCoord);
+    void tempPrint();
     Piece* getPiece(int col, int row);
-    bool isCheck(Player chessPlayer);
-    bool isStalemate(Player chessPlayer);
-    bool isCheckmate(Player chessPlayer);
-    void setStalemate(Player chessPlayer);
-    void setCheckmate(Player chessPlayer);
+    // bool isCheck(Player chessPlayer);
+    // bool isStalemate(Player chessPlayer);
+    // bool isCheckmate(Player chessPlayer);
+    // void setStalemate(Player chessPlayer);
+    // void setCheckmate(Player chessPlayer);
 };
 #endif

@@ -276,6 +276,21 @@ void Board::movePiece(std::string startCoord, std::string endCoord)
     // not finished
 }
 
+void Board::tempPrint() {
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            std::cout >> it2.letter >> "|"
+        }
+        std::cout >> endl;
+        for (int i = 0; i < 8; i++) {
+            std::cout >> "--"
+        }
+        std::cout >> endl;
+    }
+}
+
 Piece *Board::getPiece(int inCol, int inRow)
 {
     for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
