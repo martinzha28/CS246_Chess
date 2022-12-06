@@ -5,12 +5,11 @@
 #include <iostream>
 #include <string>
 #include "Piece.h"
-#include "subject.h"
 #include "Player.h"
 
 class Piece;
 
-class Board : public Subject
+class Board
 {
 protected:
     bool whoseTurn;
@@ -36,7 +35,6 @@ public:
     std::vector< std::vector<Piece *>> piecePosition;
     void init();
     void copyBoard(Board theBoard);
-    Board(Player* p1, Player* p2);
     ~Board();
     Piece* setupPiece(char piece, int col, int row);
     Piece* setupEmpty(int col, int row);
