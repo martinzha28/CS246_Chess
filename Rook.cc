@@ -5,23 +5,16 @@
 #include "Piece.h"
 #include "Rook.h"
 
-// Absolute Value
-int abs(int a, int b) {
-    if (a - b > 0) {
-        return a - b;
-    } else {
-        return b - a;
-    }
-}
-
 
 Rook::Rook(int row, int col, bool color, char letter) : row{row}, col{col}, color{color}, letter{letter} {}
+
+Rook::~Rook() {}
 
 void Rook::move(int inCol, int inRow) {
 
 }
 
-bool Rook::moveable(int inCol, int inRow) {
+bool Rook::moveable(int inCol, int inRow, Board theBoard) {
     // Check bounds
     if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
         return false;
@@ -33,7 +26,7 @@ bool Rook::moveable(int inCol, int inRow) {
     }
 
     // Checks if piece is occupied by same color
-    if (theBoard.getPiece(inCol, inRow).getColor() == this.getColor()) {
+    if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
         return false;
     }
 
@@ -46,14 +39,14 @@ bool Rook::moveable(int inCol, int inRow) {
     if (col == inCol) {
         int rowDirection = (inRow > row) ? 1 : -1;
         for (int i = inRow + rowDirection; i != inRow; i += rowDirection) {
-            if (theBoard.getPiece(col, i).getLetter() != '0') {
+            if (theBoard.getPiece(col, i)->getLetter() != ' ') {
                 return false;
             }
         }
     } else if (row == inRow) {
         int colDirection = (inCol > col) ? 1 : -1;
         for (int i = inCol + colDirection; i != inCol; i += colDirection) {
-            if (theBoard.getPiece(i, row).getLetter() != '0') {
+            if (theBoard.getPiece(i, row)->getLetter() != ' ') {
                 return false;
             }
         }
@@ -67,17 +60,4 @@ bool Rook::moveable(int inCol, int inRow) {
 
 
     return true;
-}
-
-bool Rook::underThreat() {
-    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
-    {
-        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
-        {
-            if ((*it2)->moveable(this->col, this->row))
-            {
-                return *it2;
-            }
-        }
-    }
 }

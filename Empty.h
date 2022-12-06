@@ -9,12 +9,12 @@
 class Empty: public Piece {
     int row;
     int col;
-    char letter = 0;
+    char letter = ' ';
 public:
-    Empty(row, col);
+    Empty(int row, int col);
+    ~Empty();
     void move(int inCol, int inRow);
-    bool moveable(int inCol, int inRow);
-    bool underThreat();
+    bool moveable(int inCol, int inRow, Board theBoard);
 };
 
 #endif

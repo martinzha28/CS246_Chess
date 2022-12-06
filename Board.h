@@ -30,8 +30,10 @@ public:
         g,
         h
     };
-    std::vector<Piece *> piecePosition;
+    void tempInit();
+    std::vector< std::vector<Piece *>> piecePosition;
     void init();
+    ~Board();
     Piece* setupPiece(char piece, int col, int row);
     Piece* setupEmpty(int col, int row);
     void movePiece(std::string startCoord, std::string endCoord);

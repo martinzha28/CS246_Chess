@@ -9,6 +9,7 @@
 #include "Queen.h"
 #include "Knight.h"
 #include "Pawn.h"
+#include "Empty.h"
 
 
 
@@ -19,7 +20,10 @@ int main() {
 
     Board theBoard;
 
-    theBoard.init();
+    theBoard.setupPiece('q', 3, 4);
+
+    theBoard.tempInit();
     theBoard.tempPrint();
+
 
 }

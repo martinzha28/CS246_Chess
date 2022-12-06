@@ -5,23 +5,15 @@
 #include "Piece.h"
 #include "Knight.h"
 
-// Absolute Value
-int abs(int a, int b) {
-    if (a - b > 0) {
-        return a - b;
-    } else {
-        return b - a;
-    }
-}
-
-
 Knight::Knight(int row, int col, bool color, char letter) : row{row}, col{col}, color{color}, letter{letter} {}
+
+Knight::~Knight() {}
 
 void Knight::move(int inCol, int inRow) {
 
 }
 
-bool Knight::moveable(int inCol, int inRow) {
+bool Knight::moveable(int inCol, int inRow, Board theBoard) {
 
     bool moveable = false;
 
@@ -32,35 +24,21 @@ bool Knight::moveable(int inCol, int inRow) {
     
     // Checks if input cell is in an L-shape from current cell
     if (abs(col - inCol) == 2 && abs(row - inRow) == 1) { 
-        if (theBoard.getPiece(inCol, inRow).getLetter() == 0) {
+        if (theBoard.getPiece(inCol, inRow)->getLetter() == ' ') {
             moveable = true;
-         }
-        else if (theBoard.getPiece(inCol, inRow).getColor() != this.getColor()) {
+        }
+        else if (theBoard.getPiece(inCol, inRow)->getColor() != this->getColor()) {
             moveable = true;
         }
     } else if (abs(col - inCol) == 1 && abs(row - inRow) == 2) {
-        if (theBoard.getPiece(inCol, inRow).getLetter() == 0) {
+        if (theBoard.getPiece(inCol, inRow)->getLetter() == ' ') {
             moveable = true;
          }
-        else if (theBoard.getPiece(inCol, inRow).getColor() != this.getColor()) {
+        else if (theBoard.getPiece(inCol, inRow)->getColor() != this->getColor()) {
             moveable = true;
         }
     }
 
     // need to check if moving this piece puts king in check
-    // for andrea: returning true at the top might not work since we bypass looking for checks
     return moveable;
-}
-
-bool Knight::underThreat() {
-    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
-    {
-        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
-        {
-            if ((*it2)->moveable(this->col, this->row))
-            {
-                return *it2;
-            }
-        }
-    }
 }

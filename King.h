@@ -7,8 +7,7 @@
 #include "Board.h"
 #include "Piece.h"
 
-class King : public Piece
-{
+class King : public Piece {
 protected:
     bool canCastle = true;
     bool inCheck = false;
@@ -19,10 +18,10 @@ protected:
 
 public:
     King(int row, int col, bool color, char letter);
+    ~King();
     void move(int col, int row);
-    bool moveable(int col, int row);
-    std::vector<std::string> squaresWatching();
-    bool underThreat();
+    bool moveable(int col, int row, Board theBoard);
+    bool underThreat(std::vector< std::vector<Piece *>>, Board theBoard);
 };
 
 #endif

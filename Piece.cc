@@ -1,9 +1,15 @@
+#include <vector>
+#include <iostream>
+#include <string>
+#include "Board.h"
 #include "Piece.h"
 
-Piece::~Piece()
+/* Piece::~Piece()
 {
     delete this;
-}
+} */
+
+Piece::~Piece() {}
 
 int Piece::getRow()
 {
@@ -20,4 +26,17 @@ bool Piece::getColor(){
 
 char Piece::getLetter() {
     return this->letter;
+}
+
+bool Piece::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) {
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard))
+            {
+                return true;
+            }
+        }
+    }
 }
