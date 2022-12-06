@@ -12,6 +12,8 @@
 #include <memory>
 #include <string>
 
+void Board::blankInit()
+{
 
 void Board::blankInit() {
     for (int i = 0; i < 8; i++)
@@ -23,6 +25,24 @@ void Board::blankInit() {
             vect.emplace_back(&*newPiece);
         }
         piecePosition.emplace_back(vect);
+    }
+}
+
+void Board::update(int inCol, int inRow, Piece *updatePiece)
+{
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        int index = 0;
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->getCol() == inCol && (*it2)->getRow() == inRow)
+            {
+                delete *it2;
+                it->erase(it->begin() + index);
+                it->emplace(it->begin() + index, updatePiece);
+            }
+            index++;
+        }
     }
 }
 
@@ -215,6 +235,35 @@ void Board::init() // Initial Setup for Board
     }
 }
 
+void Board::copyBoard(Board theBoard)
+{
+    // loops through each cell in theBoard
+    int row = 0;
+    for (auto it = theBoard.piecePosition.begin(); it != theBoard.piecePosition.end(); ++it)
+    {
+        int col = 0;
+        std::vector<Piece *> vect;
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            // if empty, setupEmpty with row and col
+            // else, setupPiece with theBoard.letter, row and col
+            if ((*it2)->getLetter() == ' ')
+            {
+                Piece *tempPiece = this->setupEmpty(col, row);
+                vect.emplace_back(&*tempPiece);
+            }
+            else
+            {
+                Piece *tempPiece = this->setupPiece((*it2)->getLetter(), col, row);
+                vect.emplace_back(&*tempPiece);
+            }
+            col++;
+        }
+        this->piecePosition.emplace_back(vect);
+        row++;
+    }
+}
+
 Board::~Board()
 {
     for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
@@ -301,16 +350,51 @@ Piece *Board::setupPiece(char piece, int col, int row)
     return newPiece;
 }
 
-Piece * Board::setupEmpty(int col, int row)
+Piece *Board::setupEmpty(int col, int row)
 {
     Piece *newPiece = new Empty{row, col};
     return newPiece;
 }
-/*
+
 void Board::movePiece(std::string startCoord, std::string endCoord)
 {
-    // not finished
-} */
+    Piece *newPiece = this->setupPiece(this->getPiece(startCol, startRow)->getLetter(), endCol, endRow);
+    this->update(endCol, endRow, newPiece);
+
+    Piece *newEmpty = this->setupEmpty(startCol, startRow);
+    this->update(startCol, startRow, newEmpty);
+}
+
+void Board::tempPrint()
+{
+    int row = 8;
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        int col = 1;
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if (it2 == it->begin())
+            {
+                std::cout << row << " ";
+                --row;
+            }
+
+            if ((*it2)->getLetter() == ' ' && (row + col) % 2 == 0)
+            {
+                std::cout << '_';
+            }
+            else
+            {
+                std::cout << (*it2)->getLetter();
+            }
+
+            ++col;
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl
+              << "  abcdefgh" << std::endl;
+}
 
 Piece *Board::getPiece(int inCol, int inRow)
 {
@@ -325,6 +409,116 @@ Piece *Board::getPiece(int inCol, int inRow)
         }
     }
 }
+
+// Finding if the passed color is in check
+
+bool Board::inCheck(bool color)
+{
+    int kingRow;
+    int kingCol;
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it) // finding same colored King
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if (((*it2)->getLetter() == 'K' && color) || ((*it2)->getLetter() == 'k' && !color))
+            {
+                kingRow = (*it2)->getRow();
+                kingCol = (*it2)->getCol();
+            }
+        }
+    }
+
+    // std::cout << "Kings Position : " << kingRow << " " << kingCol << std::endl;
+
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it) // finding opposite pieces that attack king
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->getLetter() != ' ')
+            {
+                if ((*it2)->getColor() == !color && (*it2)->moveable(kingCol, kingRow, *this))
+                {
+                    std::string s = (color) ? "White" : "Black";
+                    std::cout << s << " is in check." << std::endl;
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+bool Board::inStalemate(bool color)
+{
+    // Ensures that color is not in check
+    if (inCheck(color))
+    {
+        return false;
+    }
+    // loop through each cell on the board
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            // if it's not empty and the piece is the color we're analyzing
+            // std::cout << "Letter: "<< (*it2)->getLetter() << " ";
+            // std::cout << "Row | Col: " << (*it2)->getRow() << " " << (*it2)->getCol() << std::endl;
+            if ((*it2)->getLetter() != ' ' && (*it2)->getColor() == color)
+            {
+                // see if the piece can move anywhere on the board
+                for (int row = 0; row < 8; row++)
+                {
+                    for (int col = 0; col < 8; col++)
+                    {
+                        if ((*it2)->moveable(col, row, *this))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    std::cout << "Stalemate!" << std::endl;
+    return true;
+}
+
+bool Board::inCheckmate(bool color)
+{
+    // Ensures that color is in Check
+    if (!inCheck(color))
+    {
+        return false;
+    }
+
+    // loop through each cell on the board
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            // if it's not empty and the piece is the color we're analyzing
+            if ((*it2)->getLetter() != ' ' && (*it2)->getColor() == color)
+            {
+                // see if the piece can move anywhere on the board
+                for (int row = 0; row < 8; row++)
+                {
+                    for (int col = 0; col < 8; col++)
+                    {
+                        if ((*it2)->moveable(col, row, *this))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    std::string s = (color) ? "White" : "Black";
+    std::cout << "Checkmate! " << s << "wins!" << std::endl;
+    return true;
+}
+
 /*
 bool Board::isCheck(Player chessPlayer)
 {
