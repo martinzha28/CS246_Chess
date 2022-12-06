@@ -10,6 +10,14 @@ int Piece::getRow()
     return this->row;
 }
 
-int Piece::getCol(){
+int Piece::getCol() {
     return this->col;
+}
+
+bool Piece::getColor(){
+    return this->color;
+}
+
+char Piece::getLetter() {
+    return this->letter;
 }

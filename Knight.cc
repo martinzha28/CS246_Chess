@@ -1,5 +1,8 @@
 #include <vector>
 #include <iostream>
+#include <string>
+#include "Board.h"
+#include "Piece.h"
 #include "Knight.h"
 
 // Absolute Value
@@ -19,18 +22,33 @@ void Knight::move(int inCol, int inRow) {
 }
 
 bool Knight::moveable(int inCol, int inRow) {
+
     bool moveable = false;
-    // Checks if input cell is diagonal to current cell
-    if (col - inCol == abs(row - inRow)) { // col > inCol, bishop moves left
-        for (int i = col; i <= inCol; i--) {
-            if ()
-        }
-    } else if (col - inCol == abs(row - inRow)) { // inCol > col, bishop moves right
-        for (int i = col; i <= inCol; i++) { 
 
+    // Checks if input coords are on the board
+    if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
+        return false;
+    }
+    
+    // Checks if input cell is in an L-shape from current cell
+    if (abs(col - inCol) == 2 && abs(row - inRow) == 1) { 
+        if (theBoard.getPiece(inCol, inRow).getLetter() == 0) {
+            moveable = true;
+         }
+        else if (theBoard.getPiece(inCol, inRow).getColor() != this.getColor()) {
+            moveable = true;
         }
-    } 
+    } else if (abs(col - inCol) == 1 && abs(row - inRow) == 2) {
+        if (theBoard.getPiece(inCol, inRow).getLetter() == 0) {
+            moveable = true;
+         }
+        else if (theBoard.getPiece(inCol, inRow).getColor() != this.getColor()) {
+            moveable = true;
+        }
+    }
 
+    // need to check if moving this piece puts king in check
+    // for andrea: returning true at the top might not work since we bypass looking for checks
     return moveable;
 }
 
@@ -39,5 +57,5 @@ std::vector<std::string> Knight::squaresWatching() {
 }
 
 bool Knight::underThreat() {
-
+    
 }
