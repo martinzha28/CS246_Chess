@@ -53,9 +53,16 @@ bool Knight::moveable(int inCol, int inRow, Board theBoard) {
     // std::cout << "inRow: " << inRow << std::endl;
 
     // Checks if input coords are on the board
-    if (inCol < 0 || inCol > 8 || inRow < 0 || inRow > 8) {
+    if (inCol < 0 || inCol >= 8 || inRow < 0 || inRow >= 8) {
         // std::cout << "1 out of bounds" << std::endl;
         return false;
+    }
+
+    // Checks if piece is occupied by same color
+    if (theBoard.getPiece(inCol, inRow)->getLetter() != ' ') {
+        if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
+            return false;
+        }
     }
     
     // Checks if input cell is in an L-shape from current cell

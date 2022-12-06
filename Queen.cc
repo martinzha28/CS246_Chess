@@ -52,7 +52,7 @@ bool Queen::moveable(int inCol, int inRow, Board theBoard) {
     }
 
     // Checks if input cell is diagonal or in same row to current cell
-    if ((abs(col - inCol) != abs(row - inRow)) || (col != inCol && row != inRow)) {
+    if ((abs(col - inCol) != abs(row - inRow)) && (col != inCol && row != inRow)) {
         return false;
     }
 

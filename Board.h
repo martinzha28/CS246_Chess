@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include "Piece.h"
-#include "Player.h"
+// #include "Player.h"
 
 class Piece;
 
@@ -14,8 +14,8 @@ class Board
 protected:
     bool whoseTurn;
     int fiftyMoveDraw;
-    Player* player1;
-    Player* player2;
+    // Player* player1;
+    // Player* player2;
     bool stalemate;
     bool checkmate;
 
@@ -45,6 +45,8 @@ public:
     bool inCheck(bool color);
     bool inStalemate(bool color);
     bool inCheckmate(bool color);
+
+
 
     // void setStalemate(Player chessPlayer);
     // void setCheckmate(Player chessPlayer);

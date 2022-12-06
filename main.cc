@@ -13,9 +13,6 @@
 #include "Player.h"
 
 int main() {
-    Player* p1;
-    Player* p2;
-
     float whiteScore = 0; // 0.5 for draws
     float blackScore = 0;
     Board theBoard;
@@ -26,13 +23,48 @@ int main() {
 
     while (!std::cin.eof())
         {
+            std::cout << "Enter Command: " << std::endl;
             std::cin >> cmd;
             if (cmd == "game") { // Starts Game
                 turn = true;
                 std::string playerOne;
                 std::string playerTwo;
                 std::cin >> playerOne >> playerTwo;
+
+                if (playerOne == "human") { 
+                    Player *player1 = new Human();
+                    theBoard.setPlayerOne(player1);
+                } else if (playerOne == "computer1") {
+                    Player *player1 = new CPU(1);
+                    theBoard.setPlayerOne(player1);
+                } else if (playerOne == "computer2") {
+                    Player *player1 = new CPU(2);
+                    theBoard.setPlayerOne(player1);
+                } else if (playerOne == "computer3") {
+                    Player *player1 = new CPU(3);
+                    theBoard.setPlayerOne(player1);
+                } else {
+                    std::cout << "Please Enter a valid Player One" << std::endl;
+                }
+
+                if (playerTwo == "human") { 
+                    Player *player2 = new Human();
+                    theBoard.setPlayerTwo(player1);
+                } else if (playerTwo == "computer1") {
+                    Player *player2 = new CPU(1);
+                    theBoard.setPlayerTwo(player1);
+                } else if (playerTwo == "computer2") {
+                    Player *player2 = new CPU(2);
+                    theBoard.setPlayerTwo(player1);
+                } else if (playerTwo == "computer3") {
+                    Player *player2 = new CPU(3);
+                    theBoard.setPlayerTwo(player1);
+                } else {
+                    std::cout << "Please Enter a valid Player One" << std::endl;
+                }
+
                 // NEED TO DETERMINE HUMAN/BOT MATCHUP + PLAYER STUFF
+
                 
                 if (!manualSetup) { // Default Initialize if setup was not engaged
                     theBoard.init();
@@ -76,11 +108,10 @@ int main() {
 
                         // std::cout << startCol << startRow << endRow << endCol << std::endl;
 
-                        // If Moveable, will Move the Piece                   
+                        // If Moveable, will Move the Piece
                         if (theBoard.getPiece(startCol, startRow)->moveable(endCol, endRow, theBoard)) { 
 
                             theBoard.move(startRow, startCol, endRow, endCol);
-
                             theBoard.tempPrint();
                             turn = !turn;
                         } else {
@@ -128,17 +159,17 @@ int main() {
 
                             if (piece == 'k' && !blackKing) {
                                 blackKing = true;
-                                Piece *newPiece = theBoard.setupPiece('k', 7 - inRow, inCol);
-                                theBoard.update(7 - inRow, inCol, newPiece);
+                                Piece *newPiece = theBoard.setupPiece('k', inCol, inRow);
+                                theBoard.update(inCol, inRow, newPiece);
                                 theBoard.tempPrint();
                             } else if (piece == 'K' && !whiteKing) {
                                 whiteKing = true;
-                                Piece *newPiece = theBoard.setupPiece('K', 7 - inRow, inCol);
-                                theBoard.update(7 - inRow, inCol, newPiece);
+                                Piece *newPiece = theBoard.setupPiece('K', inCol, inRow);
+                                theBoard.update(inCol, inRow, newPiece);
                                 theBoard.tempPrint();
                             } else if (piece != 'k' && piece != 'K'){
-                                Piece *newPiece = theBoard.setupPiece(piece, 7 - inRow, inCol);
-                                theBoard.update(7 - inRow, inCol, newPiece);
+                                Piece *newPiece = theBoard.setupPiece(piece, inCol, inRow);
+                                theBoard.update(inCol, inRow, newPiece);
                                 theBoard.tempPrint();
                             } else {
                                 std::cout << "Only one King is allowed per color." << std::endl;
@@ -151,21 +182,21 @@ int main() {
                             int inRow = coords[1] - '1';
                             int inCol = coords[0] - 'a';
 
-                            char piece = theBoard.getPiece(7 - inRow, inCol)->getLetter();
+                            char piece = theBoard.getPiece(inCol, inRow)->getLetter();
 
                             if (piece == 'k') {
                                 blackKing = false;
-                                Piece *emptyPiece = theBoard.setupEmpty(7 - inRow, inCol);
-                                theBoard.update(7 - inRow, inCol, emptyPiece);
+                                Piece *emptyPiece = theBoard.setupEmpty(inCol, inRow);
+                                theBoard.update(inCol, inRow, emptyPiece);
                                 theBoard.tempPrint();
                             } else if (piece == 'K') {
                                 whiteKing = false;
-                                Piece *emptyPiece = theBoard.setupEmpty(7 - inRow, inCol);
-                                theBoard.update(7 - inRow, inCol, emptyPiece);
+                                Piece *emptyPiece = theBoard.setupEmpty(inCol, inRow);
+                                theBoard.update(inCol, inRow, emptyPiece);
                                 theBoard.tempPrint();
                             } else {
-                                Piece *emptyPiece = theBoard.setupEmpty(7 - inRow, inCol);
-                                theBoard.update(7 - inRow, inCol, emptyPiece);
+                                Piece *emptyPiece = theBoard.setupEmpty(inCol, inRow);
+                                theBoard.update(inCol, inRow, emptyPiece);
                                 theBoard.tempPrint();
                             }
                         } else if (setupCmd == "=") {
@@ -188,8 +219,8 @@ int main() {
                                 std::cout << "A King is in Check!" << std::endl;
                                 continue;
                             }
-                            for (int i = 0; i <= 8; i += 8) { // Pawns on the Back Ranks
-                                for (int j = 0; j <= 8; j++) {
+                            for (int i = 0; i <= 8; i += 7) { // Pawns on the Back Ranks
+                                for (int j = 0; j < 8; j++) {
                                     char backRanks = theBoard.getPiece(j, i)->getLetter();
                                     if (backRanks == 'p' || backRanks == 'P') {
                                         std::cout << "There is a Pawn on the first/last row." << std::endl;
@@ -202,7 +233,9 @@ int main() {
                         } else {
                             std::cout << "Please enter a valid setup command." << std::endl;
                         }
+
                 }
+
             } else {
                 std::cout << "Please enter a valid command." << std::endl;
             }
