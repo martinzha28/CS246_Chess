@@ -13,12 +13,16 @@ protected:
     int col;
     bool color;
     char letter;
+    bool canCastle = true;
 public:
     Rook(int row, int col, bool color, char letter);
     ~Rook();
-    char getLetter();
-    void move(int inCol, int inRow);
-    bool moveable(int inCol, int inRow, Board theBoard);
+    char getLetter() override;
+    int getRow() override;
+    int getCol() override;
+    bool getColor() override;
+    bool underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) override;
+    bool moveable(int inCol, int inRow, Board theBoard) override;
 };
 
 #endif

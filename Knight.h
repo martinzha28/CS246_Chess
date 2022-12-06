@@ -15,9 +15,12 @@ class Knight: public Piece {
 public:
     Knight(int row, int col, bool color, char letter);
     ~Knight();
-    char getLetter();
-    void move(int inCol, int inRow);
-    bool moveable(int inCol, int inRow, Board theBoard);
+    char getLetter() override;
+    int getRow() override;
+    int getCol() override;
+    bool getColor() override;
+    bool underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) override;
+    bool moveable(int inCol, int inRow, Board theBoard) override;
 };
 
 #endif

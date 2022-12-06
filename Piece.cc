@@ -10,29 +10,3 @@
 } */
 
 Piece::~Piece() {}
-
-int Piece::getRow()
-{
-    return this->row;
-}
-
-int Piece::getCol() {
-    return this->col;
-}
-
-bool Piece::getColor(){
-    return this->color;
-}
-
-bool Piece::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) {
-    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
-    {
-        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
-        {
-            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard))
-            {
-                return true;
-            }
-        }
-    }
-}

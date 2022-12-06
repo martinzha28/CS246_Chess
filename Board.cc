@@ -12,7 +12,6 @@
 #include <memory>
 #include <string>
 
-
 void Board::blankInit() {
     for (int i = 0; i < 8; i++)
     {
@@ -26,96 +25,70 @@ void Board::blankInit() {
     }
 }
 
+void Board::update(int inCol, int inRow, Piece *updatePiece) {
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        int index = 0;
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->getCol() == inCol && (*it2)->getRow() == inRow) {
+                delete *it2;
+                it->erase(it->begin() + index);
+                it->emplace(it->begin() + index, updatePiece);
+            } 
+            index++;
+        }
+    }
+}
+
+
 void Board::init() // Initial Setup for Board
 {
-    for (int i = 0; i < 8; i++)
+    for (int i = 7; i >= 0; --i)
     {
         std::vector<Piece *> vect;
         for (int j = 0; j < 8; j++)
         {
-            if (i == 0)
+            if (i == 7)
             {
                 if (j == 0)
                 {
-                    Piece *tempPiece = this->setupPiece('r', a, 0);
+                    Piece *tempPiece = this->setupPiece('r', a, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 1)
                 {
-                    Piece *tempPiece = this->setupPiece('n', b, 0);
+                    Piece *tempPiece = this->setupPiece('n', b, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 2)
                 {
-                    Piece *tempPiece = this->setupPiece('b', c, 0);
+                    Piece *tempPiece = this->setupPiece('b', c, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 3)
                 {
-                    Piece *tempPiece = this->setupPiece('q', d, 0);
+                    Piece *tempPiece = this->setupPiece('q', d, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 4)
                 {
-                    Piece *tempPiece = this->setupPiece('k', e, 0);
+                    Piece *tempPiece = this->setupPiece('k', e, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 5)
                 {
-                    Piece *tempPiece = this->setupPiece('b', f, 0);
+                    Piece *tempPiece = this->setupPiece('b', f, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 6)
                 {
-                    Piece *tempPiece = this->setupPiece('n', g, 0);
+                    Piece *tempPiece = this->setupPiece('n', g, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 7)
                 {
-                    Piece *tempPiece = this->setupPiece('r', h, 0);
-                    vect.emplace_back(&*tempPiece);
-                }
-            }
-            else if (i == 1)
-            {
-                if (j == 0)
-                {
-                    Piece *tempPiece = this->setupPiece('p', a, 1);
-                    vect.emplace_back(&*tempPiece);
-                }
-                else if (j == 1)
-                {
-                    Piece *tempPiece = this->setupPiece('p', b, 1);
-                    vect.emplace_back(&*tempPiece);
-                }
-                else if (j == 2)
-                {
-                    Piece *tempPiece = this->setupPiece('p', c, 1);
-                    vect.emplace_back(&*tempPiece);
-                }
-                else if (j == 3)
-                {
-                    Piece *tempPiece = this->setupPiece('p', d, 1);
-                    vect.emplace_back(&*tempPiece);
-                }
-                else if (j == 4)
-                {
-                    Piece *tempPiece = this->setupPiece('p', e, 1);
-                    vect.emplace_back(&*tempPiece);
-                }
-                else if (j == 5)
-                {
-                    Piece *tempPiece = this->setupPiece('p', f, 1);
-                    vect.emplace_back(&*tempPiece);
-                }
-                else if (j == 6)
-                {
-                    Piece *tempPiece = this->setupPiece('p', g, 1);
-                    vect.emplace_back(&*tempPiece);
-                }
-                else if (j == 7)
-                {
-                    Piece *tempPiece = this->setupPiece('p', h, 1);
+                    Piece *tempPiece = this->setupPiece('r', h, i);
                     vect.emplace_back(&*tempPiece);
                 }
             }
@@ -123,96 +96,169 @@ void Board::init() // Initial Setup for Board
             {
                 if (j == 0)
                 {
-                    Piece *tempPiece = this->setupPiece('P', a, 6);
+                    Piece *tempPiece = this->setupPiece('p', a, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 1)
                 {
-                    Piece *tempPiece = this->setupPiece('P', b, 6);
+                    Piece *tempPiece = this->setupPiece('p', b, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 2)
                 {
-                    Piece *tempPiece = this->setupPiece('P', c, 6);
+                    Piece *tempPiece = this->setupPiece('p', c, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 3)
                 {
-                    Piece *tempPiece = this->setupPiece('P', d, 6);
+                    Piece *tempPiece = this->setupPiece('p', d, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 4)
                 {
-                    Piece *tempPiece = this->setupPiece('P', e, 6);
+                    Piece *tempPiece = this->setupPiece('p', e, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 5)
                 {
-                    Piece *tempPiece = this->setupPiece('P', f, 6);
+                    Piece *tempPiece = this->setupPiece('p', f, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 6)
                 {
-                    Piece *tempPiece = this->setupPiece('P', g, 6);
+                    Piece *tempPiece = this->setupPiece('p', g, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 7)
                 {
-                    Piece *tempPiece = this->setupPiece('P', h, 6);
+                    Piece *tempPiece = this->setupPiece('p', h, i);
                     vect.emplace_back(&*tempPiece);
                 }
             }
-            else if (i == 7)
+            else if (i == 1)
             {
                 if (j == 0)
                 {
-                    Piece *tempPiece = this->setupPiece('R', a, 7);
+                    Piece *tempPiece = this->setupPiece('P', a, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 1)
                 {
-                    Piece *tempPiece = this->setupPiece('N', b, 7);
+                    Piece *tempPiece = this->setupPiece('P', b, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 2)
                 {
-                    Piece *tempPiece = this->setupPiece('B', c, 7);
+                    Piece *tempPiece = this->setupPiece('P', c, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 3)
                 {
-                    Piece *tempPiece = this->setupPiece('Q', d, 7);
+                    Piece *tempPiece = this->setupPiece('P', d, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 4)
                 {
-                    Piece *tempPiece = this->setupPiece('K', e, 7);
+                    Piece *tempPiece = this->setupPiece('P', e, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 5)
                 {
-                    Piece *tempPiece = this->setupPiece('B', f, 7);
+                    Piece *tempPiece = this->setupPiece('P', f, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 6)
                 {
-                    Piece *tempPiece = this->setupPiece('N', g, 7);
+                    Piece *tempPiece = this->setupPiece('P', g, i);
                     vect.emplace_back(&*tempPiece);
                 }
                 else if (j == 7)
                 {
-                    Piece *tempPiece = this->setupPiece('R', h, 7);
+                    Piece *tempPiece = this->setupPiece('P', h, i);
+                    vect.emplace_back(&*tempPiece);
+                }
+            }
+            else if (i == 0)
+            {
+                if (j == 0)
+                {
+                    Piece *tempPiece = this->setupPiece('R', a, i);
+                    vect.emplace_back(&*tempPiece);
+                }
+                else if (j == 1)
+                {
+                    Piece *tempPiece = this->setupPiece('N', b, i);
+                    vect.emplace_back(&*tempPiece);
+                }
+                else if (j == 2)
+                {
+                    Piece *tempPiece = this->setupPiece('B', c, i);
+                    vect.emplace_back(&*tempPiece);
+                }
+                else if (j == 3)
+                {
+                    Piece *tempPiece = this->setupPiece('Q', d, i);
+                    vect.emplace_back(&*tempPiece);
+                }
+                else if (j == 4)
+                {
+                    Piece *tempPiece = this->setupPiece('K', e, i);
+                    vect.emplace_back(&*tempPiece);
+                }
+                else if (j == 5)
+                {
+                    Piece *tempPiece = this->setupPiece('B', f, i);
+                    vect.emplace_back(&*tempPiece);
+                }
+                else if (j == 6)
+                {
+                    Piece *tempPiece = this->setupPiece('N', g, i);
+                    vect.emplace_back(&*tempPiece);
+                }
+                else if (j == 7)
+                {
+                    Piece *tempPiece = this->setupPiece('R', h, i);
                     vect.emplace_back(&*tempPiece);
                 }
             }
             else
             {
-                Piece *tempPiece = setupEmpty(j, i);
+                Piece *tempPiece = this->setupEmpty(j, i);
                 vect.emplace_back(&*tempPiece);
             }
         }
         piecePosition.emplace_back(vect);
     }
+}
+
+void Board::copyBoard(Board theBoard) 
+{
+    // loops through each cell in theBoard
+    int row = 0;
+    for (auto it = theBoard.piecePosition.begin(); it != theBoard.piecePosition.end(); ++it)
+    {
+        int col = 0;
+        std::vector<Piece *> vect;
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            // if empty, setupEmpty with row and col
+            // else, setupPiece with theBoard.letter, row and col
+            if ((*it2)->getLetter() == ' ') 
+            {
+                Piece *tempPiece = this->setupEmpty(col, row);
+                vect.emplace_back(&*tempPiece);
+            } 
+            else 
+            {
+                Piece *tempPiece = this->setupPiece((*it2)->getLetter(), col, row);
+                vect.emplace_back(&*tempPiece);
+            }
+            col++;
+        }
+        this->piecePosition.emplace_back(vect);
+        row++;
+    }
+   
 }
 
 Board::~Board()
@@ -228,7 +274,7 @@ Board::~Board()
     }
 }
 
-Piece *Board::setupPiece(char piece, int col, int row)
+Piece *Board::setupPiece(char piece, int col, int row) // White is true, Black is false
 {
     Piece *newPiece;
     if (piece == 'p')
@@ -287,11 +333,15 @@ Piece * Board::setupEmpty(int col, int row)
     Piece *newPiece = new Empty{row, col};
     return newPiece;
 }
-/*
-void Board::movePiece(std::string startCoord, std::string endCoord)
+
+void Board::move(int startRow, int startCol, int endRow, int endCol)
 {
-    // not finished
-} */
+    Piece *newPiece = this->setupPiece(this->getPiece(startCol, startRow)->getLetter(), endCol, endRow);
+    this->update(endCol, endRow, newPiece);
+
+    Piece *newEmpty = this->setupEmpty(startCol, startRow); 
+    this->update(startCol, startRow, newEmpty);
+} 
 
 void Board::tempPrint() {
     for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
@@ -300,8 +350,8 @@ void Board::tempPrint() {
         {
             // something wrong with getLetter()
             // only printing in 6th col
-            std::string s(1, (*it2)->getLetter()); // convert char to string
-            std::cout << s << "|";
+            // std::string s(1, (*it2)->getLetter()); // convert char to string
+            std::cout << (*it2)->getLetter() << "|";
         }
         std::cout << std::endl;
         for (int i = 0; i < 8; i++) {
@@ -324,22 +374,111 @@ Piece *Board::getPiece(int inCol, int inRow)
         }
     }
 }
+
+// Finding if the passed color is in check
+
+bool Board::inCheck(bool color)
+{
+    int kingRow;
+    int kingCol;
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it) // finding same colored King
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if (((*it2)->getLetter() == 'K' && color) || ((*it2)->getLetter() == 'k' && !color)) {
+                kingRow = (*it2)->getRow();
+                kingCol = (*it2)->getCol();
+            }
+        }
+
+        
+    }
+
+    // std::cout << "Kings Position : " << kingRow << " " << kingCol << std::endl;
+
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it) // finding opposite pieces that attack king
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->getLetter() != ' ') {
+                if ((*it2)->getColor() == !color && (*it2)->moveable(kingCol, kingRow, *this)) {
+                    std::string s = (color) ? "White" : "Black";
+                    std::cout << s << " is in check." << std::endl;
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+    
+}
+
+bool Board::inStalemate(bool color)
+{
+    // Ensures that color is not in check
+    if (inCheck(color)) {
+        return false;
+    }
+    // loop through each cell on the board
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            // if it's not empty and the piece is the color we're analyzing
+            // std::cout << "Letter: "<< (*it2)->getLetter() << " ";
+            // std::cout << "Row | Col: " << (*it2)->getRow() << " " << (*it2)->getCol() << std::endl;
+            if ((*it2)->getLetter() != ' ' && (*it2)->getColor() == color) {
+                // see if the piece can move anywhere on the board
+                for (int row = 0; row < 8; row++)
+                {
+                    for (int col = 0; col < 8; col++)
+                    {
+                        if ((*it2)->moveable(col, row, *this)) {
+                            return false;
+                        }
+                    }
+                }
+            } 
+        }
+    }
+    std::cout << "Stalemate!" << std::endl;
+    return true;
+}
+
+bool Board::inCheckmate(bool color)
+{
+    // Ensures that color is in Check
+    if (!inCheck(color)) {
+        return false;
+    }
+    
+    // loop through each cell on the board
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            // if it's not empty and the piece is the color we're analyzing
+            if ((*it2)->getLetter() != ' ' && (*it2)->getColor() == color) {
+                // see if the piece can move anywhere on the board
+                for (int row = 0; row < 8; row++)
+                {
+                    for (int col = 0; col < 8; col++)
+                    {
+                        if ((*it2)->moveable(col, row, *this)) {
+                            return false;
+                        }
+                    }
+                }
+            } 
+        }
+    }
+    std::string s = (color) ? "White" : "Black";
+    std::cout << "Checkmate! "<< s << "wins!" << std::endl;
+    return true;
+}
+
 /*
-bool Board::isCheck(Player chessPlayer)
-{
-    // not finished
-}
-
-bool Board::isStalemate(Player chessPlayer)
-{
-    return 1; // not finished
-}
-
-bool Board::isCheckmate(Player chessPlayer)
-{
-    return 1; // not finished
-}
-
 void Board::setStalemate(Player chessPlayer)
 {
     // not finished
@@ -348,5 +487,4 @@ void Board::setStalemate(Player chessPlayer)
 void Board::setCheckmate(Player chessPlayer)
 {
     // not finished
-}
-*/
+} */

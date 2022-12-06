@@ -14,13 +14,36 @@ char Rook::getLetter() {
     return this->letter;
 }
 
-void Rook::move(int inCol, int inRow) {
-
+int Rook::getRow()
+{
+    return this->row;
 }
+
+int Rook::getCol() {
+    return this->col;
+}
+
+bool Rook::getColor(){
+    return this->color;
+}
+
+bool Rook::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) {
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard))
+            {
+                return true;
+            }
+        }
+    }
+}
+
 
 bool Rook::moveable(int inCol, int inRow, Board theBoard) {
     // Check bounds
-    if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
+    if (inCol < 0 || inCol >= 8 || inRow < 0 || inRow >= 8) {
         return false;
     }
 
@@ -30,8 +53,10 @@ bool Rook::moveable(int inCol, int inRow, Board theBoard) {
     }
 
     // Checks if piece is occupied by same color
-    if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
-        return false;
+    if (theBoard.getPiece(inCol, inRow)->getLetter() != ' ') {
+        if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
+            return false;
+        }
     }
 
     // Checks if input cell is in a straight line to the current cell
@@ -42,26 +67,30 @@ bool Rook::moveable(int inCol, int inRow, Board theBoard) {
     // Checks if pathway is blocked
     if (col == inCol) {
         int rowDirection = (inRow > row) ? 1 : -1;
-        for (int i = inRow + rowDirection; i != inRow; i += rowDirection) {
+        for (int i = this->getRow() + rowDirection; i != inRow; i += rowDirection) {
             if (theBoard.getPiece(col, i)->getLetter() != ' ') {
                 return false;
             }
         }
     } else if (row == inRow) {
         int colDirection = (inCol > col) ? 1 : -1;
-        for (int i = inCol + colDirection; i != inCol; i += colDirection) {
+        for (int i = this->getCol() + colDirection; i != inCol; i += colDirection) {
             if (theBoard.getPiece(i, row)->getLetter() != ' ') {
                 return false;
             }
         }
     }
-    // Check to see if move blocks check
-
-    
 
     // Checks to see if moving the Piece produces check
+    // Board testBoard;
+    // testBoard.copyBoard(theBoard);
+    // testBoard.move(this->getRow(), this->getCol(), inRow, inCol); // we are trying to rewrite this using update
     
-
-
+    // if (testBoard.inCheck(this->getColor()))
+    // {
+    //     delete &testBoard;
+    //     return false;
+    // }
+    // delete &testBoard;
     return true;
 }

@@ -20,9 +20,11 @@ public:
     King(int row, int col, bool color, char letter);
     ~King();
     char getLetter();
-    void move(int col, int row);
-    bool moveable(int col, int row, Board theBoard);
-    bool underThreat(std::vector< std::vector<Piece *>>, Board theBoard);
+    int getRow() override;
+    int getCol() override;
+    bool getColor() override;
+    bool underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) override;
+    bool moveable(int inCol, int inRow, Board theBoard) override;
 };
 
 #endif

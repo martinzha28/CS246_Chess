@@ -16,14 +16,12 @@ class Piece {
         int col;
         bool color;
         char letter;
-        int getRow();
-        int getCol();
-        // virtual std::vector<std::string> squaresWatching();
-        bool underThreat(std::vector< std::vector<Piece *>>, Board theBoard);
-        bool getColor();
-        virtual char getLetter() = 0;
         virtual ~Piece();
-        virtual void move(int col, int row) = 0;
+        virtual char getLetter() = 0;
+        virtual int getRow() = 0;
+        virtual int getCol() = 0;
+        virtual bool getColor() = 0;
+        virtual bool underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) = 0;
         virtual bool moveable(int col, int row, Board theBoard) = 0;
 };
 

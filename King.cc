@@ -5,15 +5,6 @@
 #include "Piece.h"
 #include "King.h"
 
-// Absolute Value
-int abs(int a, int b) {
-    if (a - b > 0) {
-        return a - b;
-    } else {
-        return b - a;
-    }
-}
-
 King::King(int row, int col, bool color, char letter) : row{row}, col{col}, color{color}, letter{letter} {}
 
 King::~King() {}
@@ -22,13 +13,35 @@ char King::getLetter() {
     return this->letter;
 }
 
-void King::move(int inCol, int inRow) {
+int King::getRow()
+{
+    return this->row;
+}
 
+int King::getCol() {
+    return this->col;
+}
+
+bool King::getColor(){
+    return this->color;
+}
+
+bool King::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) {
+    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    {
+        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+        {
+            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard))
+            {
+                return true;
+            }
+        }
+    }
 }
 
 bool King::moveable(int inCol, int inRow, Board theBoard) {
     // Check bounds
-    if (inCol <= 0 || inCol > 8 || inRow <= 0 || inRow > 8) {
+    if (inCol < 0 || inCol >= 8 || inRow < 0 || inRow >= 8) {
         return false;
     }
 
@@ -38,21 +51,30 @@ bool King::moveable(int inCol, int inRow, Board theBoard) {
     }
 
     // Checks if piece is occupied by same color
-    if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
-        return false;
+    if (theBoard.getPiece(inCol, inRow)->getLetter() != ' ') {
+        if (theBoard.getPiece(inCol, inRow)->getColor() == this->getColor()) {
+            return false;
+        }
     }
 
     // Checks if moved in direct one move
 
     if (inCol - col > 1 || inRow - row > 1 || col - inCol > 1 || row - inRow > 1) {
         return false;
-    } else if (true) { // castling conditions NOT FINISHED
+    } else if (false) { // castling conditions NOT FINISHED
         // check casling conditions
         return false;
     }
 
-    // check conditions for moving creates a check
-
+    // Checks to see if moving the Piece produces check
+    // Board testBoard;
+    // testBoard.copyBoard(theBoard);
+    // testBoard.move(this->getRow(), this->getCol(), inRow, inCol);
+    // if (testBoard.inCheck(this->getColor()))
+    // {
+    //     delete &testBoard;
+    //     return false;
+    // }
+    // delete &testBoard;
     return true;
-
 }
