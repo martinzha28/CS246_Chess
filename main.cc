@@ -142,7 +142,7 @@ int main() {
 
                         // Checks for End Condition
                         if (theBoard.inCheckmate(turn)) {
-                            (turn) ? whiteScore++ : blackScore++; 
+                            (!turn) ? whiteScore++ : blackScore++; 
                             break;
                             // delete &theBoard;
                             // Board theBoard;
@@ -268,8 +268,9 @@ int main() {
             theBoard.detach(*it);
             delete *it;
         }
-
-        delete &theBoard;
+        
+        // Board *boardPtr = &theBoard;
+        // delete boardPtr;
 
         std::cout << "Final Score:" << std::endl;
         std::cout << "White: " << whiteScore << std::endl;
