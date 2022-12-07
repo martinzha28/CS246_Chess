@@ -13,15 +13,23 @@ CPU::~CPU() {}
 
 void CPU::getMove(int *startCol, int *startRow, int *endCol, int *endRow, Board theBoard) {
     if (this->level == 1) {
-        std::vector<Move *> possibleMoves;
+        std::vector<int> scv;
+        std::vector<int> srv;
+        std::vector<int> ecv;
+        std::vector<int> erv;
 
         for (int i = 0; i < 8; i++) { // Looks at *any* possible moves and randomly picks one
             for (int j = 0; j < 8; j++) {
                 for (int k = 0; k < 8; k++) {
                     for (int l = 0; l < 8; l++) {
-                        if (theBoard.getPiece(i,j)->moveable(k,l, theBoard, false)) {
-                            // Move *newMove = new Move(i,j,k,l);
-                            // possibleMoves.emplace_back(&*newMove);
+                        if (theBoard.getPiece(i,j)->getLetter() != ' ' && theBoard.getPiece(i,j)->getColor() == this->color) {
+                            if (theBoard.getPiece(i,j)->moveable(k,l, theBoard, false)) {
+                                std::cout << theBoard.getPiece(i,j)->getLetter() << i << j << k << l << std::endl;
+                                scv.emplace_back(i);
+                                srv.emplace_back(j);
+                                ecv.emplace_back(k);
+                                erv.emplace_back(l);
+                            }
                         }
                     }
                 }
@@ -29,7 +37,12 @@ void CPU::getMove(int *startCol, int *startRow, int *endCol, int *endRow, Board 
         }
 
 
-        int pickedMove = rand() % possibleMoves.size();
+        int pickedMove = rand() % scv.size();
+
+        *startCol = scv.at(pickedMove);
+        *startRow = srv.at(pickedMove);
+        *endCol = srv.at(pickedMove);
+        *endRow = erv.at(pickedMove);
 
         
     } else if (this->level == 2) {
@@ -72,7 +85,7 @@ void CPU::getMove(int *startCol, int *startRow, int *endCol, int *endRow, Board 
                     }   
                 }
             }
-        }
+        } 
 
 
         // next tries to find a piece to take

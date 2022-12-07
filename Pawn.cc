@@ -64,33 +64,34 @@ bool Pawn::moveable(int inCol, int inRow, Board theBoard, bool oneDeep) {
     if (col == inCol && row + direction == inRow) { // condition for moving forward 1
         if (theBoard.getPiece(inCol, inRow)->getLetter() == ' ') {
             return true;
-        }
+        } 
     } else if (col == inCol && row + direction + direction == inRow) { // condition for moving forward 2
         if (this->getRow() == initialRow) { //checks if you're in the starting row
             if (theBoard.getPiece(inCol, inRow)->getLetter() == ' ' && theBoard.getPiece(inCol, inRow - direction)->getLetter() == ' ') {
                 return true;
             }
         }
-
     } else if (row + direction == inRow && (col + 1 == inCol || col - 1 == inCol)) { // condition for taking diagonally 
         if (theBoard.getPiece(inCol, inRow)->getLetter() != ' ') {
             if (theBoard.getPiece(inCol, inRow)->getColor() != this->getColor()) {
                 return true;
             }
         }
-    } else {
-        return false;
     }
 
-   // Checks to see if moving the Piece produces check
-    // Board testBoard;
-    // testBoard.copyBoard(theBoard);
-    // testBoard.move(this->getRow(), this->getCol(), inRow, inCol);
-    // if (testBoard.inCheck(this->getColor()))
-    // {
-    //     delete &testBoard;
-    //     return false;
-    // }
-    // delete &testBoard;
-    return true;
+    // Checks to see if moving the Piece produces check
+    // has a bool argument called oneDeep (defaults false)
+    // when false, it checks for if moveable to inRow inCol and doesn't put themself in check
+    // when true, it only checks for if moveable to inRow inCol, doesn't care if putting itself in check
+    if (!oneDeep) {
+        Board testBoard;
+        testBoard.copyBoard(theBoard);
+        testBoard.move(this->getRow(), this->getCol(), inRow, inCol);
+        
+        if (testBoard.inCheck(this->getColor(), true))
+        {
+            return false;
+        }
+    }
+    return false;
 }

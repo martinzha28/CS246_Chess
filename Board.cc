@@ -264,7 +264,7 @@ void Board::copyBoard(Board theBoard)
 
 Board::~Board()
 {
-    for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    /* for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
     {
         for (auto it2 = it->begin(); it2 != it->end(); ++it2)
         {
@@ -272,7 +272,7 @@ Board::~Board()
             //it->erase(it2);
         }
         piecePosition.erase(it);
-    }
+    } */
 }
 
 Piece *Board::setupPiece(char piece, int col, int row)

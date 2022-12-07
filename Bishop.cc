@@ -76,15 +76,18 @@ bool Bishop::moveable(int inCol, int inRow, Board theBoard, bool oneDeep) {
     }
 
     // Checks to see if moving the Piece produces check
-    // Board testBoard;
-    // testBoard.copyBoard(theBoard);
-    // testBoard.move(this->getRow(), this->getCol(), inRow, inCol);
-
-    // if (testBoard.inCheck(this->getColor()))
-    // {
-    //     delete &testBoard;
-    //     return false;
-    // }
-    // delete &testBoard;
+    // has a bool argument called oneDeep (defaults false)
+    // when false, it checks for if moveable to inRow inCol and doesn't put themself in check
+    // when true, it only checks for if moveable to inRow inCol, doesn't care if putting itself in check
+    if (!oneDeep) {
+        Board testBoard;
+        testBoard.copyBoard(theBoard);
+        testBoard.move(this->getRow(), this->getCol(), inRow, inCol);
+        
+        if (testBoard.inCheck(this->getColor(), true))
+        {
+            return false;
+        }
+    }
     return true;
 }

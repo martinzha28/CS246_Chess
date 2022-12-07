@@ -102,7 +102,7 @@ int main() {
                             break;
                         } else if (turn == false) {
                             whiteScore++;
-                            delete &theBoard;
+                            //delete &theBoard;
                             // Board theBoard;
                             break;
                         }
