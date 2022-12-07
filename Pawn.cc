@@ -32,7 +32,7 @@ bool Pawn::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board t
     {
         for (auto it2 = it->begin(); it2 != it->end(); ++it2)
         {
-            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard))
+            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard, false))
             {
                 return true;
             }
@@ -40,7 +40,7 @@ bool Pawn::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board t
     }
 }
 
-bool Pawn::moveable(int inCol, int inRow, Board theBoard) {
+bool Pawn::moveable(int inCol, int inRow, Board theBoard, bool oneDeep) {
      // Check bounds
     if (inCol < 0 || inCol >= 8 || inRow < 0 || inRow >= 8) {
         return false;
@@ -66,8 +66,8 @@ bool Pawn::moveable(int inCol, int inRow, Board theBoard) {
             return true;
         }
     } else if (col == inCol && row + direction + direction == inRow) { // condition for moving forward 2
-        if (this->getRow() == initialRow) {
-            if (theBoard.getPiece(inCol, inRow)->getLetter() == ' ' && theBoard.getPiece(inCol, inRow + direction)->getLetter() == ' ') {
+        if (this->getRow() == initialRow) { //checks if you're in the starting row
+            if (theBoard.getPiece(inCol, inRow)->getLetter() == ' ' && theBoard.getPiece(inCol, inRow - direction)->getLetter() == ' ') {
                 return true;
             }
         }

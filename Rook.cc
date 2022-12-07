@@ -32,7 +32,7 @@ bool Rook::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board t
     {
         for (auto it2 = it->begin(); it2 != it->end(); ++it2)
         {
-            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard))
+            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard, false))
             {
                 return true;
             }
@@ -41,7 +41,7 @@ bool Rook::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board t
 }
 
 
-bool Rook::moveable(int inCol, int inRow, Board theBoard) {
+bool Rook::moveable(int inCol, int inRow, Board theBoard, bool oneDeep) {
     // Check bounds
     if (inCol < 0 || inCol >= 8 || inRow < 0 || inRow >= 8) {
         return false;
@@ -82,15 +82,23 @@ bool Rook::moveable(int inCol, int inRow, Board theBoard) {
     }
 
     // Checks to see if moving the Piece produces check
-    // Board testBoard;
-    // testBoard.copyBoard(theBoard);
-    // testBoard.move(this->getRow(), this->getCol(), inRow, inCol); // we are trying to rewrite this using update
-    
-    // if (testBoard.inCheck(this->getColor()))
-    // {
+    // has a bool argument called oneDeep (defaults false)
+    // when false, it checks for if moveable to inRow inCol and doesn't put themself in check
+    // when true, it only checks for if moveable to inRow inCol, doesn't care if putting itself in check
+    // if (!oneDeep) {
+    //     std::cout << "oneDeep is false, testing if this move puts us is check" << std::endl;
+    //     Board testBoard;
+    //     testBoard.copyBoard(theBoard);
+    //     testBoard.move(this->getRow(), this->getCol(), inRow, inCol);
+        
+    //     if (testBoard.inCheck(this->getColor(), true))
+    //     {
+    //         std::cout << "right before first delete" << std::endl;
+    //         delete &testBoard;
+    //         return false;
+    //     }
+    //     std::cout << "before second delete" << std::endl;
     //     delete &testBoard;
-    //     return false;
+    //     return true;
     // }
-    // delete &testBoard;
-    return true;
 }

@@ -20,7 +20,7 @@ public:
     int getCol() override;
     bool getColor() override;
     bool underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) override;
-    bool moveable(int inCol, int inRow, Board theBoard) override;
+    bool moveable(int inCol, int inRow, Board theBoard, bool oneDeep) override;
 };
 
 #endif

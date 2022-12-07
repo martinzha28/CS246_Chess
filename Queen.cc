@@ -31,7 +31,7 @@ bool Queen::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board 
     {
         for (auto it2 = it->begin(); it2 != it->end(); ++it2)
         {
-            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard))
+            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard, false))
             {
                 return true;
             }
@@ -39,7 +39,7 @@ bool Queen::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board 
     }
 }
 
-bool Queen::moveable(int inCol, int inRow, Board theBoard) {
+bool Queen::moveable(int inCol, int inRow, Board theBoard, bool oneDeep) {
 
     // Check bounds
     if (inCol < 0 || inCol >= 8 || inRow < 0 || inRow >= 8) {

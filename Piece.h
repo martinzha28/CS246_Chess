@@ -22,7 +22,7 @@ class Piece {
         virtual int getCol() = 0;
         virtual bool getColor() = 0;
         virtual bool underThreat(std::vector< std::vector<Piece *>> piecePosition, Board theBoard) = 0;
-        virtual bool moveable(int col, int row, Board theBoard) = 0;
+        virtual bool moveable(int col, int row, Board theBoard, bool oneDeep) = 0;
 };
 
 #endif

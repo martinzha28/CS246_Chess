@@ -5,17 +5,16 @@
 #include <iostream>
 #include <string>
 #include "Piece.h"
-// #include "Player.h"
+#include "Player.h"
+#include "Subject.h"
 
 class Piece;
 
-class Board
+class Board : public Subject
 {
 protected:
     bool whoseTurn;
     int fiftyMoveDraw;
-    // Player* player1;
-    // Player* player2;
     bool stalemate;
     bool checkmate;
 
@@ -31,6 +30,8 @@ public:
         g,
         h
     };
+    Player *player1;
+    Player *player2;
     void blankInit();
     std::vector< std::vector<Piece *>> piecePosition;
     void init();
@@ -40,15 +41,13 @@ public:
     Piece* setupEmpty(int col, int row);
     void update(int inCol, int inRow, Piece *updatePiece);
     void move(int startRow, int startCol, int endRow, int endCol);
-    void tempPrint();
+    void printBoard();
     Piece* getPiece(int col, int row);
-    bool inCheck(bool color);
+    bool inCheck(bool color, bool oneDeep);
     bool inStalemate(bool color);
     bool inCheckmate(bool color);
 
-
-
-    // void setStalemate(Player chessPlayer);
-    // void setCheckmate(Player chessPlayer);
+    void setPlayerOne(Player *player);
+    void setPlayerTwo(Player *player);
 };
 #endif

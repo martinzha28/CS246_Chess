@@ -40,7 +40,7 @@ bool Knight::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board
     {
         for (auto it2 = it->begin(); it2 != it->end(); ++it2)
         {
-            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard))
+            if ((*it2)->moveable(this->getCol(), this->getRow(), theBoard, false))
             {
                 return true;
             }
@@ -48,7 +48,7 @@ bool Knight::underThreat(std::vector< std::vector<Piece *>> piecePosition, Board
     }
 }
 
-bool Knight::moveable(int inCol, int inRow, Board theBoard) {
+bool Knight::moveable(int inCol, int inRow, Board theBoard, bool oneDeep) {
 
     // std::cout << "inRow: " << inRow << std::endl;
 
@@ -91,7 +91,7 @@ bool Knight::moveable(int inCol, int inRow, Board theBoard) {
     testBoard.copyBoard(theBoard);
     testBoard.move(this->getRow(), this->getCol(), inRow, inCol);
 
-    testBoard.tempPrint();
+    testBoard.printBoard();
     if (testBoard.inCheck(this->getColor()))
     {
         delete &testBoard;

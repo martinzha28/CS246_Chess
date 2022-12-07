@@ -11,6 +11,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include "Textdisplay.h"
 
 void Board::blankInit() {
     for (int i = 0; i < 8; i++)
@@ -267,8 +268,8 @@ Board::~Board()
     {
         for (auto it2 = it->begin(); it2 != it->end(); ++it2)
         {
-            // delete it2? <- is this necessary?
-            it->erase(it2);
+            //delete it2; //<- is this necessary?
+            //it->erase(it2);
         }
         piecePosition.erase(it);
     }
@@ -343,7 +344,7 @@ void Board::move(int startRow, int startCol, int endRow, int endCol)
     this->update(startCol, startRow, newEmpty);
 }
 
-// void Board::tempPrint() {
+// void Board::printBoard() {
 //     int row = 8;
 //     for (auto it = this->piecePosition.begin(); it != this->piecePosition.end(); ++it)
 //     {
@@ -362,19 +363,23 @@ void Board::move(int startRow, int startCol, int endRow, int endCol)
 //     }
 // }
 
-void Board::tempPrint() {
-    for (int i = 7; i >= 0; i--) {
-        std::cout << (i + 1) << "|";
-        for (int j = 0; j < 8; j++) {
-            std::cout << this->getPiece(j, i)->getLetter() << "|";
-        }
-        std::cout << std::endl;
-        std::cout << " ----------------" << std::endl;
-    }
-    std::cout << "  a b c d e f g h" << std::endl;
+void Board::printBoard() {
+    notifyObservers();
 }
 
-// void Board::tempPrint()
+// void Board::printBoard() {
+//     for (int i = 7; i >= 0; i--) {
+//         std::cout << (i + 1) << "|";
+//         for (int j = 0; j < 8; j++) {
+//             std::cout << this->getPiece(j, i)->getLetter() << "|";
+//         }
+//         std::cout << std::endl;
+//         std::cout << " ----------------" << std::endl;
+//     }
+//     std::cout << "  a b c d e f g h" << std::endl;
+// }
+
+// void Board::printBoard()
 // {
 //     int row = 8;
 //     for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
@@ -421,7 +426,7 @@ Piece *Board::getPiece(int inCol, int inRow)
 
 // Finding if the passed color is in check
 
-bool Board::inCheck(bool color)
+bool Board::inCheck(bool color, bool oneDeep)
 {
     int kingRow;
     int kingCol;
@@ -445,10 +450,12 @@ bool Board::inCheck(bool color)
         {
             if ((*it2)->getLetter() != ' ')
             {
-                if ((*it2)->getColor() == !color && (*it2)->moveable(kingCol, kingRow, *this))
+                if ((*it2)->getColor() == !color && (*it2)->moveable(kingCol, kingRow, *this, oneDeep))
                 {
-                    std::string s = (color) ? "White" : "Black";
-                    std::cout << s << " is in check." << std::endl;
+                    if (!oneDeep) {
+                        std::string s = (color) ? "White" : "Black";
+                        std::cout << s << " is in check." << std::endl;
+                    }
                     return true;
                 }
             }
@@ -461,7 +468,7 @@ bool Board::inCheck(bool color)
 bool Board::inStalemate(bool color)
 {
     // Ensures that color is not in check
-    if (inCheck(color))
+    if (inCheck(color, false))
     {
         return false;
     }
@@ -480,7 +487,7 @@ bool Board::inStalemate(bool color)
                 {
                     for (int col = 0; col < 8; col++)
                     {
-                        if ((*it2)->moveable(col, row, *this))
+                        if ((*it2)->moveable(col, row, *this, false))
                         {
                             return false;
                         }
@@ -496,7 +503,7 @@ bool Board::inStalemate(bool color)
 bool Board::inCheckmate(bool color)
 {
     // Ensures that color is in Check
-    if (!inCheck(color))
+    if (!inCheck(color, false))
     {
         return false;
     }
@@ -514,7 +521,7 @@ bool Board::inCheckmate(bool color)
                 {
                     for (int col = 0; col < 8; col++)
                     {
-                        if ((*it2)->moveable(col, row, *this))
+                        if ((*it2)->moveable(col, row, *this, false))
                         {
                             return false;
                         }
@@ -528,10 +535,10 @@ bool Board::inCheckmate(bool color)
     return true;
 }
 
-// void Board::setPlayerOne(Player *player)  {
-//     this->player1 = player;
-// }
+void Board::setPlayerOne(Player *player)  {
+    this->player1 = player;
+}
 
-// void Board::setPlayerTwo(Player *player)  {
-//     this->player2 = player;
-// }
+void Board::setPlayerTwo(Player *player)  {
+    this->player2 = player;
+}

@@ -11,13 +11,25 @@
 #include "Pawn.h"
 #include "Empty.h"
 #include "Player.h"
+#include "Human.h"
+#include "Move.h"
+#include "CPU.h"
+#include "Textdisplay.h"
 
 int main() {
+    Player *White;
+    Player *Black;
+
+    std::vector<Observer *> observers;
+
     float whiteScore = 0; // 0.5 for draws
     float blackScore = 0;
     Board theBoard;
     bool manualSetup = false;
     bool turn = true;
+
+    Observer *textObserver = new textDisplay{&theBoard};
+    observers.emplace_back(textObserver);
 
     std::string cmd;
 
@@ -27,43 +39,49 @@ int main() {
             std::cin >> cmd;
             if (cmd == "game") { // Starts Game
                 turn = true;
+
+                // Determines Human/ Bot Matchup
                 std::string playerOne;
                 std::string playerTwo;
                 std::cin >> playerOne >> playerTwo;
 
                 if (playerOne == "human") { 
-                    Player *player1 = new Human();
-                    theBoard.setPlayerOne(player1);
+                    Player *White = new Human();
+                    theBoard.setPlayerOne(White);
                 } else if (playerOne == "computer1") {
-                    Player *player1 = new CPU(1);
-                    theBoard.setPlayerOne(player1);
+                    Player *White = new CPU(1, true);
+                    theBoard.setPlayerOne(White);
                 } else if (playerOne == "computer2") {
-                    Player *player1 = new CPU(2);
-                    theBoard.setPlayerOne(player1);
+                    Player *White = new CPU(2, true);
+                    theBoard.setPlayerOne(White);
                 } else if (playerOne == "computer3") {
-                    Player *player1 = new CPU(3);
-                    theBoard.setPlayerOne(player1);
+                    Player *White = new CPU(3, true);
+                    theBoard.setPlayerOne(White);
+                } else if (playerOne == "computer4") {
+                    Player *White = new CPU(4, true);
+                    theBoard.setPlayerOne(White);
                 } else {
                     std::cout << "Please Enter a valid Player One" << std::endl;
                 }
 
                 if (playerTwo == "human") { 
-                    Player *player2 = new Human();
-                    theBoard.setPlayerTwo(player1);
+                    Player *Black = new Human();
+                    theBoard.setPlayerTwo(Black);
                 } else if (playerTwo == "computer1") {
-                    Player *player2 = new CPU(1);
-                    theBoard.setPlayerTwo(player1);
+                    Player *Black = new CPU(1, false);
+                    theBoard.setPlayerTwo(Black);
                 } else if (playerTwo == "computer2") {
-                    Player *player2 = new CPU(2);
-                    theBoard.setPlayerTwo(player1);
+                    Player *Black = new CPU(2, false);
+                    theBoard.setPlayerTwo(Black);
                 } else if (playerTwo == "computer3") {
-                    Player *player2 = new CPU(3);
-                    theBoard.setPlayerTwo(player1);
+                    Player *Black = new CPU(3, false);
+                    theBoard.setPlayerTwo(Black);
+                } else if (playerTwo == "computer4") {
+                    Player *Black = new CPU(4, false);
+                    theBoard.setPlayerTwo(Black);
                 } else {
-                    std::cout << "Please Enter a valid Player One" << std::endl;
+                    std::cout << "Please Enter a valid Player Two" << std::endl;
                 }
-
-                // NEED TO DETERMINE HUMAN/BOT MATCHUP + PLAYER STUFF
 
                 
                 if (!manualSetup) { // Default Initialize if setup was not engaged
@@ -71,7 +89,7 @@ int main() {
                 }
                 manualSetup = false; // Sets for next game
 
-                theBoard.tempPrint();
+                theBoard.printBoard();
                 while (true) {
                     std::string moveCmd;
                     std::cout << "Enter a move: " << std::endl;
@@ -79,7 +97,7 @@ int main() {
                     if (moveCmd == "resign") {
                         if (turn == true) {
                             blackScore++;
-                            delete &theBoard;
+                            //delete &theBoard;
                             // Board theBoard;
                             break;
                         } else if (turn == false) {
@@ -89,18 +107,21 @@ int main() {
                             break;
                         }
                     } else if (moveCmd == "move") {
-                        // Convert String to 
-                        std::string startCoord; 
-                        std::string endCoord;
-                        std::cin >> startCoord;
-                        std::cout << "Start Coords: " << startCoord << std::endl;
-                        std::cin >> endCoord;
-                        std::cout << "End Coords: " << endCoord << std::endl;
-                        int startRow = startCoord[1] - '1';
-                        int startCol = startCoord[0] - 'a';
-                        int endRow = endCoord[1] - '1';
-                        int endCol = endCoord[0] - 'a';
+                        int startCol;
+                        int startRow;
+                        int endCol;
+                        int endRow;
 
+                        if (turn) {
+                            theBoard.player1->getMove(&startCol, &startRow, &endCol, &endRow, theBoard);
+                        } else {
+                            theBoard.player2->getMove(&startCol, &startRow, &endCol, &endRow, theBoard);
+                        }
+
+                        if (theBoard.getPiece(startCol, startRow)->getLetter() == ' ') { // If picked piece is blank
+                            std::cout << "Youd picked a square with no piece." << std::endl;
+                            continue;
+                        }
                         if (theBoard.getPiece(startCol, startRow)->getColor() != turn) { // If picked piece is opponent color
                             std::cout << "Cannot Pick up Opponent's Piece" << std::endl;
                             continue;
@@ -109,10 +130,10 @@ int main() {
                         // std::cout << startCol << startRow << endRow << endCol << std::endl;
 
                         // If Moveable, will Move the Piece
-                        if (theBoard.getPiece(startCol, startRow)->moveable(endCol, endRow, theBoard)) { 
+                        if (theBoard.getPiece(startCol, startRow)->moveable(endCol, endRow, theBoard, false)) { 
 
                             theBoard.move(startRow, startCol, endRow, endCol);
-                            theBoard.tempPrint();
+                            theBoard.printBoard();
                             turn = !turn;
                         } else {
                             std::cout << "Please enter a valid move." << std::endl;
@@ -123,12 +144,12 @@ int main() {
                         if (theBoard.inCheckmate(turn)) {
                             (turn) ? whiteScore++ : blackScore++; 
                             break;
-                            delete &theBoard;
+                            // delete &theBoard;
                             // Board theBoard;
                         } else if (theBoard.inStalemate(true) || theBoard.inStalemate(false)) {
                             blackScore += 0.5;
                             whiteScore += 0.5;
-                            delete &theBoard;
+                            // delete &theBoard;
                             // Board theBoard;
                             break;
                         }
@@ -161,16 +182,16 @@ int main() {
                                 blackKing = true;
                                 Piece *newPiece = theBoard.setupPiece('k', inCol, inRow);
                                 theBoard.update(inCol, inRow, newPiece);
-                                theBoard.tempPrint();
+                                theBoard.printBoard();
                             } else if (piece == 'K' && !whiteKing) {
                                 whiteKing = true;
                                 Piece *newPiece = theBoard.setupPiece('K', inCol, inRow);
                                 theBoard.update(inCol, inRow, newPiece);
-                                theBoard.tempPrint();
+                                theBoard.printBoard();
                             } else if (piece != 'k' && piece != 'K'){
                                 Piece *newPiece = theBoard.setupPiece(piece, inCol, inRow);
                                 theBoard.update(inCol, inRow, newPiece);
-                                theBoard.tempPrint();
+                                theBoard.printBoard();
                             } else {
                                 std::cout << "Only one King is allowed per color." << std::endl;
                             }
@@ -188,16 +209,16 @@ int main() {
                                 blackKing = false;
                                 Piece *emptyPiece = theBoard.setupEmpty(inCol, inRow);
                                 theBoard.update(inCol, inRow, emptyPiece);
-                                theBoard.tempPrint();
+                                theBoard.printBoard();
                             } else if (piece == 'K') {
                                 whiteKing = false;
                                 Piece *emptyPiece = theBoard.setupEmpty(inCol, inRow);
                                 theBoard.update(inCol, inRow, emptyPiece);
-                                theBoard.tempPrint();
+                                theBoard.printBoard();
                             } else {
                                 Piece *emptyPiece = theBoard.setupEmpty(inCol, inRow);
                                 theBoard.update(inCol, inRow, emptyPiece);
-                                theBoard.tempPrint();
+                                theBoard.printBoard();
                             }
                         } else if (setupCmd == "=") {
                             std::string color;
@@ -215,7 +236,7 @@ int main() {
                                 std::cout << "Both Kings are Not Placed." << std::endl;
                                 continue;
                             } 
-                            if (theBoard.inCheck(true) || theBoard.inCheck(false)) { // White/Black King is in Check
+                            if (theBoard.inCheck(true, false) || theBoard.inCheck(false, false)) { // White/Black King is in Check
                                 std::cout << "A King is in Check!" << std::endl;
                                 continue;
                             }
@@ -239,6 +260,12 @@ int main() {
             } else {
                 std::cout << "Please enter a valid command." << std::endl;
             }
+        }
+
+        for (auto it = observers.begin(); it != observers.end(); ++it)
+        {
+            theBoard.detach(*it);
+            delete *it;
         }
 
         delete &theBoard;
