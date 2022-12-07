@@ -17,9 +17,7 @@ void Human::getMove(int *startCol, int *startRow, int *endCol, int *endRow, Boar
     std::string startCoord; 
     std::string endCoord;
     std::cin >> startCoord;
-    std::cout << "Start Coords: " << startCoord << std::endl;
     std::cin >> endCoord;
-    std::cout << "End Coords: " << endCoord << std::endl;
     *startRow = startCoord[1] - '1';
     *startCol = startCoord[0] - 'a';
     *endRow = endCoord[1] - '1';

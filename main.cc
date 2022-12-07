@@ -90,7 +90,7 @@ int main() {
                 manualSetup = false; // Sets for next game
 
                 theBoard.printBoard();
-                while (true) {
+                while (!std::cin.eof()) {
                     std::string moveCmd;
                     std::cout << "Enter a move: " << std::endl;
                     std::cin >> moveCmd;
@@ -262,13 +262,15 @@ int main() {
             }
         }
 
+
         for (auto it = observers.begin(); it != observers.end(); ++it)
         {
             theBoard.detach(*it);
             delete *it;
         }
 
-        delete &theBoard;
+        delete theBoard;
+
         std::cout << "Final Score:" << std::endl;
         std::cout << "White: " << whiteScore << std::endl;
         std::cout << "Black: " << blackScore << std::endl;

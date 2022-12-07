@@ -24,7 +24,7 @@ void CPU::getMove(int *startCol, int *startRow, int *endCol, int *endRow, Board 
                     for (int l = 0; l < 8; l++) {
                         if (theBoard.getPiece(i,j)->getLetter() != ' ' && theBoard.getPiece(i,j)->getColor() == this->color) {
                             if (theBoard.getPiece(i,j)->moveable(k,l, theBoard, false)) {
-                                std::cout << theBoard.getPiece(i,j)->getLetter() << i << j << k << l << std::endl;
+                                // std::cout << theBoard.getPiece(i,j)->getLetter() << i << j << k << l << std::endl;
                                 scv.emplace_back(i);
                                 srv.emplace_back(j);
                                 ecv.emplace_back(k);
@@ -41,7 +41,7 @@ void CPU::getMove(int *startCol, int *startRow, int *endCol, int *endRow, Board 
 
         *startCol = scv.at(pickedMove);
         *startRow = srv.at(pickedMove);
-        *endCol = srv.at(pickedMove);
+        *endCol = ecv.at(pickedMove);
         *endRow = erv.at(pickedMove);
 
         
