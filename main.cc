@@ -269,7 +269,7 @@ int main() {
             delete *it;
         }
 
-        delete theBoard;
+        delete &theBoard;
 
         std::cout << "Final Score:" << std::endl;
         std::cout << "White: " << whiteScore << std::endl;

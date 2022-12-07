@@ -91,3 +91,5 @@ bool Bishop::moveable(int inCol, int inRow, Board theBoard, bool oneDeep) {
     }
     return true;
 }
+
+

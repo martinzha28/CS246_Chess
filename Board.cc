@@ -264,15 +264,15 @@ void Board::copyBoard(Board theBoard)
 
 Board::~Board()
 {
-    /* for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
-    {
-        for (auto it2 = it->begin(); it2 != it->end(); ++it2)
-        {
-            //delete it2; //<- is this necessary?
-            //it->erase(it2);
-        }
-        piecePosition.erase(it);
-    } */
+    // for (auto it = piecePosition.begin(); it != piecePosition.end(); ++it)
+    // {
+    //     for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+    //     {
+    //         delete *it2; //<- is this necessary?
+    //         it->erase(it2);
+    //     }
+    //     piecePosition.erase(it);
+    // } 
 }
 
 Piece *Board::setupPiece(char piece, int col, int row)
@@ -542,3 +542,4 @@ void Board::setPlayerOne(Player *player)  {
 void Board::setPlayerTwo(Player *player)  {
     this->player2 = player;
 }
+
