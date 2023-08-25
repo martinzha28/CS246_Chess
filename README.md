@@ -44,7 +44,7 @@ The White pieces are always capitalized and the black pieces are always in lower
 
 <h2> UML Diagram </h2>
 
-![Updated UML Diagram](uml.jpg)
+![Updated UML Diagram](UML.jpg)
 
 
 <h2> Documents </h2>
